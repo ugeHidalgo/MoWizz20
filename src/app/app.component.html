@@ -28,16 +28,18 @@
     <mat-toolbar-row>
        <span><a mat-button routerLink="/mainscreen">Inicio</a></span>
 
-       <button mat-button [matMenuTriggerFor]="menuficheros">Ficheros</button>
-       <mat-menu yPosition="below" #menuficheros="matMenu">
-        <a mat-button routerLink="/bankaccounts">Cuentas</a>
-        <a mat-button routerLink="/concepts">Conceptos</a>
-      </mat-menu>
+       <div *ngIf="globals.userNameLogged">
+        <button mat-button [matMenuTriggerFor]="menuficheros">Ficheros</button>
+        <mat-menu yPosition="below" #menuficheros="matMenu">
+          <a mat-button routerLink="/bankaccounts">Cuentas</a>
+          <a mat-button routerLink="/concepts">Conceptos</a>
+        </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="menuutilidades">Utilidades</button>
-       <mat-menu yPosition="below" #menuutilidades="matMenu">
-        <a mat-button routerLink="/import-data">Importacion de datos</a>
-      </mat-menu>
+        <button mat-button [matMenuTriggerFor]="menuutilidades">Utilidades</button>
+        <mat-menu yPosition="below" #menuutilidades="matMenu">
+          <a mat-button routerLink="/import-data">Importacion de datos</a>
+        </mat-menu>
+      </div>
 
        <span class="spacer"></span>
 
