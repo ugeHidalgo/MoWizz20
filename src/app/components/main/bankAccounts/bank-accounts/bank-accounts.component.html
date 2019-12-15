@@ -1,0 +1,11 @@
+<ng-container *ngFor="let bankAccount of bankAccounts">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{bankAccount.name}}</mat-card-title>
+      <mat-card-subtitle>{{bankAccount.description}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{bankAccount.iban}}
+    </mat-card-content>
+  </mat-card>
+</ng-container>

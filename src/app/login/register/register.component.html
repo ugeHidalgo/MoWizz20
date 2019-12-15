@@ -1,0 +1,37 @@
+<mat-toolbar>
+  <span>Registro de nuevo usuario</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+      <form class="my-form">
+          <mat-form-field class="full-width">
+            <mat-label>Nombre de usuario:</mat-label>
+            <input  matInput  placeholder="Nombre usuario"  name="username"  [(ngModel)]="user.userName" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Nombre</mat-label>
+            <input  matInput  placeholder="Nombre" [(ngModel)]="user.firstName" name="name">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Apellidos</mat-label>
+            <input  matInput  placeholder="Apellidos" name="apellidos" [(ngModel)]="user.lastName">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>e-Mail</mat-label>
+            <input  matInput  placeholder="e-Mail" name="email" [(ngModel)]="user.eMail" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input  matInput  placeholder="Password"  name="password" [(ngModel)]="user.password" type="password" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Repetir Password</mat-label>
+            <input  matInput  placeholder="Repetir Password"  name="repeatPassword" type="password" required>
+          </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="register()" color="primary">Registrar</button>
+      <button mat-raised-button (click)="close()">Cerrar</button>
+    </mat-card-actions>
+</mat-card>
