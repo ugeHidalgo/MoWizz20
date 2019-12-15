@@ -8,6 +8,7 @@ import { ConceptsComponent } from '../components/main/concepts/concepts/concepts
 import { MainScreenComponent } from '../components/main/mainScreen/main-screen.component';
 import { LoginComponent } from '../login/login/login.component';
 import { RegisterComponent } from '../login/register/register.component';
+import { ImportDataComponent } from '../components/utilities/import-data/import-data.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'mainscreen', component: MainScreenComponent },
   { path: 'bankaccounts', component: BankAccountsComponent },
   { path: 'concepts', component: ConceptsComponent },
+  { path: 'import-data', component: ImportDataComponent },
   { path: '', redirectTo: 'mainscreen', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
 ];

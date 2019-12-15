@@ -23,6 +23,7 @@ import { MainScreenComponent } from './components/main/mainScreen/main-screen.co
 import { RegisterComponent } from './login/register/register.component';
 import { LoginComponent } from './login/login/login.component';
 import * as toastrCustomOptions from './messages/toastrCustomOptions';
+import { ImportDataComponent } from './components/utilities/import-data/import-data.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import * as toastrCustomOptions from './messages/toastrCustomOptions';
     MainScreenComponent,
     RegisterComponent,
     LoginComponent,
+    ImportDataComponent,
   ],
   imports: [
     GlobalRoutingModule,
