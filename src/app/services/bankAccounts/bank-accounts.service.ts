@@ -10,7 +10,6 @@ import { GlobalsService } from 'src/app/globals/globals.service';
   providedIn: 'root'
 })
 export class BankAccountsService {
-
   private bankAccountsUrl;
 
   constructor(
@@ -29,6 +28,19 @@ export class BankAccountsService {
               .pipe(
                 tap(any => console.log('Bank accounts fetched successfully.')),
                 catchError(me.handleError('getBankAccounts', []))
+              );
+  }
+
+  /**.*/
+  createBankAccounts(bankAccount: BankAccount): Observable<BankAccount> {
+    const me = this,
+          httpOptions = me.createHttpOptionsWithToken();
+
+    return this.http.post<BankAccount>(me.bankAccountsUrl, bankAccount, httpOptions)
+              .pipe(
+                // tslint:disable-next-line:no-shadowed-variable
+                tap((bankAccount: BankAccount) => console.log(`BankAccount with id ${bankAccount._id} was created.`)),
+                catchError(me.handleError<BankAccount>('BankAccount: failed to create new BankAccount.'))
               );
   }
 

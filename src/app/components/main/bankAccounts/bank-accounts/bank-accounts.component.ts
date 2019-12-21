@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
 
 @Component({
