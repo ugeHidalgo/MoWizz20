@@ -32,15 +32,15 @@ export class BankAccountsService {
   }
 
   /**.*/
-  createBankAccounts(bankAccount: BankAccount): Observable<BankAccount> {
+  createBankAccounts(bankAccounts: BankAccount[]): Observable<BankAccount[]> {
     const me = this,
           httpOptions = me.createHttpOptionsWithToken();
 
-    return this.http.post<BankAccount>(me.bankAccountsUrl, bankAccount, httpOptions)
+    return this.http.post<BankAccount[]>(me.bankAccountsUrl, bankAccounts, httpOptions)
               .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
-                tap((bankAccount: BankAccount) => console.log(`BankAccount with id ${bankAccount._id} was created.`)),
-                catchError(me.handleError<BankAccount>('BankAccount: failed to create new BankAccount.'))
+                tap((bankAccounts: BankAccount[]) => console.log(`A total of ${bankAccounts.length} bank accounts were successfully created.`)),
+                catchError(me.handleError<BankAccount[]>('BankAccount: failed to create new BankAccount.'))
               );
   }
 

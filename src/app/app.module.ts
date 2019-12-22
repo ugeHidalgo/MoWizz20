@@ -34,7 +34,7 @@ import { ImportDataComponent } from './components/utilities/import-data/import-d
     MainScreenComponent,
     RegisterComponent,
     LoginComponent,
-    ImportDataComponent,
+    ImportDataComponent
   ],
   imports: [
     GlobalRoutingModule,
