@@ -1,9 +1,30 @@
-<input type="file" (change)="onFileChange($event)" multiple="false" />
-	<table class="sjs-table">
-		<tr *ngFor="let row of data">
-			<td *ngFor="let val of row">
-				{{val}}
-			</td>
-		</tr>
-	</table>
-	<button (click)="import()">Importar!</button>
+	<div class="import-step">
+		<mat-form-field class="example-full-width" #selectedEntity>
+			<mat-label>1º Selecione que va a importar.</mat-label>
+			<mat-select [(ngModel)]="selectEntity" required>
+				<mat-option *ngFor="let dataEntity of dataEntities" [value]="dataEntity.value" >
+					{{dataEntity.viewValue}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<div class="import-step">
+		<button type="button" mat-raised-button (click)="fileInput.click()">2º Indique fichero con los datos a importar.</button>
+		<input hidden (change)="onFileChange($event)" #fileInput type="file" id="file">
+	</div>
+
+	<div class="import-step">
+		<button type="button" mat-raised-button (click)="import()" [disabled]="!selectEntity">3º Comenzar la importación.</button>
+	</div>
+
+	<div class="import-step">
+		<mat-label>Datos a importar.</mat-label>
+		<table class="sjs-table">
+			<tr *ngFor="let row of data">
+				<td *ngFor="let val of row">
+					{{val}}
+				</td>
+			</tr>
+		</table>
+	</div>

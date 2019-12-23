@@ -11,7 +11,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSelectModule
 } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -31,7 +32,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ],
 
   exports: [
@@ -47,7 +49,8 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule
   ]
 })
 

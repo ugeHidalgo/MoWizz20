@@ -4,6 +4,10 @@ import { ImportBankAccountsHelper } from './helpers/import-bankAccounts.helper';
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
 
 type AOA = any[][];
+export interface DataEntity {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-import-data',
@@ -15,7 +19,15 @@ export class ImportDataComponent {
   data: AOA;
   importBankAccountsHelper: ImportBankAccountsHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
-	fileName: string = 'SheetJS.xlsx';
+  fileName: string = 'SheetJS.xlsx';
+  dataEntities: DataEntity[] = [
+    {value: 'banksAccount', viewValue: 'Cuentas bancarias'},
+    {value: 'concept', viewValue: 'Conceptos'},
+    {value: 'costCenters', viewValue: 'Centros de gasto'},
+    {value: 'transactions', viewValue: 'Movimientos'},
+    {value: 'transactionTypes', viewValue: 'Tipos de movimientos'},
+    {value: 'users', viewValue: 'Usuarios'}
+  ];
 
   constructor(
     private bankAccountsService: BankAccountsService
