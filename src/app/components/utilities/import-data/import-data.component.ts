@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ImportBankAccountsHelper } from './helpers/import-bankAccounts.helper';
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
+import { ToastrService } from 'ngx-toastr';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -17,6 +18,7 @@ export interface DataEntity {
 export class ImportDataComponent {
 
   data: AOA;
+  loading: boolean = false;
   selectedEntity : string;
   importBankAccountsHelper: ImportBankAccountsHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
@@ -31,6 +33,7 @@ export class ImportDataComponent {
   ];
 
   constructor(
+    private toastr: ToastrService,
     private bankAccountsService: BankAccountsService
   ) {
     this.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
@@ -57,10 +60,18 @@ export class ImportDataComponent {
 	import(): void {
     const me = this;
 
+    me.loading = true;
     if (!me.selectedEntity) return;
     switch (me.selectedEntity) {
       case "banksAccount":
-          me.importBankAccountsHelper.import(me.data);
+          me.importBankAccountsHelper.import(me.data)
+            .subscribe(savedBankAccounts => {
+              me.toastr.success(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`);
+            },
+            error => {
+              me.toastr.error(error.message);
+              me.loading = false;
+            });
         break;
 
       case "concept":

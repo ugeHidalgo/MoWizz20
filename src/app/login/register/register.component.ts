@@ -23,9 +23,7 @@ export class RegisterComponent {
     private toastr: ToastrService,
     private routeLocation: Location,
     private fb: FormBuilder
-    //vcr: ViewContainerRef
     ) {
-      //this.toastr.setRootViewContainerRef(vcr);
       this.createForm();
   }
 

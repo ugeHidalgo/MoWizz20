@@ -1,5 +1,6 @@
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
 import { BankAccount } from 'src/app/models/bankAccount';
+import { Observable } from 'rxjs';
 
 export class ImportBankAccountsHelper {
 
@@ -9,7 +10,7 @@ export class ImportBankAccountsHelper {
     private bankAccountsService: BankAccountsService
   ) { }
 
-  import(data): void {
+  import(data): Observable<BankAccount[]> {
     const me = this;
     var bankAccount: BankAccount,
         bankAccountsToSave: BankAccount[] = [],
@@ -44,9 +45,6 @@ export class ImportBankAccountsHelper {
       bankAccountsToSave.push(bankAccount);
     }
 
-    me.bankAccountsService.createBankAccounts(bankAccountsToSave)
-      .subscribe(savedBankAccounts => {
-        console.log(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`)
-      });
+    return me.bankAccountsService.createBankAccounts(bankAccountsToSave);
   }
 };
