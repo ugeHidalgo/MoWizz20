@@ -1,22 +1,28 @@
-<mat-toolbar>
-  <span>Login</span>
-</mat-toolbar>
-<mat-card class="my-card">
-  <mat-card-content>
-    <form class="my-form">
-      <mat-form-field class="full-width">
-        <mat-label>e-Mail</mat-label>
-        <input  matInput  placeholder="User name" name="userName" [(ngModel)]="model.userName">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <mat-label>Password</mat-label>
-        <input  matInput  placeholder="Password" name="password" [(ngModel)]="model.password">
-      </mat-form-field>
-    </form>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button (click)="login()" color="primary">Login</button>
-    <button mat-raised-button (click)="close()">Cerrar</button>
-
-  </mat-card-actions>
-</mat-card>
+<div id="container">
+	<div id="mask" *ngIf="loading">
+		<mat-spinner class="spinner"></mat-spinner>
+	</div>
+	<div id="screen" [style.opacity]="loading ? 0.6 : 1.0">
+    <mat-toolbar>
+      <span>Login</span>
+    </mat-toolbar>
+    <mat-card class="my-card">
+      <mat-card-content>
+        <form class="my-form">
+          <mat-form-field class="full-width">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="User name" name="userName" [(ngModel)]="model.userName">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" name="password" [(ngModel)]="model.password">
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button (click)="login()" color="primary">Login</button>
+        <button mat-raised-button (click)="close()">Cerrar</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -33,6 +33,7 @@ export class LoginComponent {
         data => {
           me.globals.setUser(me.model.userName);
           me.globals.storeUserDataInLocalStorage(me.model.userName, data.token);
+          me.loading = false;
           me.toastr.success("Bienvenido " + me.model.userName);
           me.router.navigate(['/mainscreen']);
         },
@@ -42,9 +43,9 @@ export class LoginComponent {
           {
             errorMessage = 'Usuario o contraseña erróneos. Inténtelo de nuevo.';
           }
-          me.toastr.error(errorMessage);
-          me.loading = false;
           me.globals.clearUser();
+          me.loading = false;
+          me.toastr.error(errorMessage);
         }
       );
   }
