@@ -1,8 +1,8 @@
-<div id="container">
-	<div id="mask" *ngIf="loading">
-		<mat-spinner class="spinner"></mat-spinner>
+<div id="screen-container">
+	<div id="mask-overlay" *ngIf="loading">
+		<mat-spinner class="mask-spinner"></mat-spinner>
 	</div>
-	<div id="screen" [style.opacity]="loading ? 0.6 : 1.0">
+	<div id="screen-to-mask" [style.opacity]="loading ? 0.6 : 1.0">
     <mat-toolbar>
       <span>Login</span>
     </mat-toolbar>
