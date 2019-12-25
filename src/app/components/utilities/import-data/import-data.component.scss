@@ -1,3 +1,33 @@
 .import-step {
   margin-bottom: 10px;
 }
+
+#container {
+  width: 800px;
+  height: 800px;
+  position: relative;
+  text-align:center;
+}
+
+#screen,
+#mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+  opacity: 1;
+}
+
+.masked {
+  opacity: 0.6;
+}
+
+#mask {
+  z-index: 10;
+}
+
+.spinner {
+  margin: auto;
+}

@@ -12,7 +12,8 @@ import {
   MatInputModule,
   MatListModule,
   MatRadioModule,
-  MatSelectModule
+  MatSelectModule,
+  MatProgressSpinnerModule
 } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -33,7 +34,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatListModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
 
   exports: [
@@ -50,7 +52,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatListModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ]
 })
 

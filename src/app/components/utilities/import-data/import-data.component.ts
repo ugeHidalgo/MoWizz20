@@ -66,6 +66,7 @@ export class ImportDataComponent {
       case "banksAccount":
           me.importBankAccountsHelper.import(me.data)
             .subscribe(savedBankAccounts => {
+              me.loading = false;
               me.toastr.success(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`);
             },
             error => {
@@ -93,6 +94,9 @@ export class ImportDataComponent {
       case "users":
           //me.importUsersHelper.import(me.data);
         break;
+
+        default:
+          break;
     }
 
   }
