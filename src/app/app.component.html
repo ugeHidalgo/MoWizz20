@@ -30,14 +30,14 @@
 
        <div *ngIf="globals.userNameLogged">
         <button mat-button [matMenuTriggerFor]="menuficheros">Ficheros</button>
-        <mat-menu yPosition="below" #menuficheros="matMenu">
-          <a mat-button routerLink="/bankaccounts">Cuentas</a>
-          <a mat-button routerLink="/concepts">Conceptos</a>
+        <mat-menu #menuficheros="matMenu">
+          <button mat-menu-item routerLink="/bankaccounts">Cuentas</button>
+          <button mat-menu-item routerLink="/concepts">Conceptos</button>
         </mat-menu>
 
         <button mat-button [matMenuTriggerFor]="menuutilidades">Utilidades</button>
         <mat-menu yPosition="below" #menuutilidades="matMenu">
-          <a mat-button routerLink="/import-data">Importacion de datos</a>
+          <button mat-menu-item routerLink="/import-data">Importacion de datos</button>
         </mat-menu>
       </div>
 

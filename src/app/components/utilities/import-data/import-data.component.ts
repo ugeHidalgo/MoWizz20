@@ -17,6 +17,7 @@ export interface DataEntity {
 export class ImportDataComponent {
 
   data: AOA;
+  selectedEntity : string;
   importBankAccountsHelper: ImportBankAccountsHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
@@ -56,6 +57,32 @@ export class ImportDataComponent {
 	import(): void {
     const me = this;
 
-    me.importBankAccountsHelper.import(me.data);
+    if (!me.selectedEntity) return;
+    switch (me.selectedEntity) {
+      case "banksAccount":
+          me.importBankAccountsHelper.import(me.data);
+        break;
+
+      case "concept":
+          //me.importConceptsHelper.import(me.data);
+        break;
+
+      case "costCenters":
+          //me.importCostCentersHelper.import(me.data);
+        break;
+
+      case "transactions":
+          //me.importTransactionsHelper.import(me.data);
+        break;
+
+      case "transactionTypes":
+          //me.importTransactionTypesHelper.import(me.data);
+        break;
+
+      case "users":
+          //me.importUsersHelper.import(me.data);
+        break;
+    }
+
   }
 }

@@ -1,12 +1,10 @@
 	<div class="import-step">
-		<mat-form-field class="example-full-width" #selectedEntity>
-			<mat-label>1º Selecione que va a importar.</mat-label>
-			<mat-select [(ngModel)]="selectEntity" required>
-				<mat-option *ngFor="let dataEntity of dataEntities" [value]="dataEntity.value" >
-					{{dataEntity.viewValue}}
-				</mat-option>
-			</mat-select>
-		</mat-form-field>
+		<mat-label bold>1º Selecione que va a importar.</mat-label>
+		<mat-select [(ngModel)]="selectedEntity" required>
+			<mat-option *ngFor="let dataEntity of dataEntities" [value]="dataEntity.value" >
+				{{dataEntity.viewValue}}
+			</mat-option>
+		</mat-select>
 	</div>
 
 	<div class="import-step">
@@ -15,8 +13,10 @@
 	</div>
 
 	<div class="import-step">
-		<button type="button" mat-raised-button (click)="import()" [disabled]="!selectEntity">3º Comenzar la importación.</button>
+		<button type="button" mat-raised-button (click)="import()" [disabled]="!selectedEntity">3º Comenzar la importación.</button>
 	</div>
+
+  <mat-divider></mat-divider>
 
 	<div class="import-step">
 		<mat-label>Datos a importar.</mat-label>
@@ -28,3 +28,5 @@
 			</tr>
 		</table>
 	</div>
+
+	<mat-divider></mat-divider>
