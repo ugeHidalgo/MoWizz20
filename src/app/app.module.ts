@@ -24,6 +24,8 @@ import { RegisterComponent } from './login/register/register.component';
 import { LoginComponent } from './login/login/login.component';
 import * as toastrCustomOptions from './messages/toastrCustomOptions';
 import { ImportDataComponent } from './components/utilities/import-data/import-data.component';
+import { TransactionsComponent } from './components/main/transactions/transactions/transactions.component';
+import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ImportDataComponent } from './components/utilities/import-data/import-d
     MainScreenComponent,
     RegisterComponent,
     LoginComponent,
-    ImportDataComponent
+    ImportDataComponent,
+    TransactionsComponent,
+    TransactionTypesComponent
   ],
   imports: [
     GlobalRoutingModule,

@@ -9,6 +9,8 @@ import { MainScreenComponent } from '../components/main/mainScreen/main-screen.c
 import { LoginComponent } from '../login/login/login.component';
 import { RegisterComponent } from '../login/register/register.component';
 import { ImportDataComponent } from '../components/utilities/import-data/import-data.component';
+import { TransactionTypesComponent } from '../components/main/transactionTypes/transaction-types/transaction-types.component';
+import { TransactionsComponent } from '../components/main/transactions/transactions/transactions.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +18,8 @@ const routes: Routes = [
   { path: 'mainscreen', component: MainScreenComponent },
   { path: 'bankaccounts', component: BankAccountsComponent },
   { path: 'concepts', component: ConceptsComponent },
+  { path: 'transactiontypes', component: TransactionTypesComponent },
+  { path: 'transactions', component: TransactionsComponent },
   { path: 'import-data', component: ImportDataComponent },
   { path: '', redirectTo: 'mainscreen', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }
