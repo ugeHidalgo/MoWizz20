@@ -4,6 +4,8 @@ import { BankAccount } from '../../models/bankAccount';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { GlobalsService } from 'src/app/globals/globals.service';
+import { Router } from '@angular/router';
+import { OperationsHelper } from '../operations.helper';
 
 
 @Injectable({
@@ -11,65 +13,41 @@ import { GlobalsService } from 'src/app/globals/globals.service';
 })
 export class BankAccountsService {
   private bankAccountsUrl;
+  private operationHelper;
 
   constructor(
     private http: HttpClient,
-    private globals: GlobalsService
+    private globals: GlobalsService,
+    private router: Router
   ) {
-    this.bankAccountsUrl  = globals.server + 'api/bankaccounts';
+    const me = this;
+
+    me.bankAccountsUrl  = globals.server + 'api/bankaccounts';
+    me.operationHelper = new OperationsHelper(globals,router);
   }
 
   /**.*/
   getBankAccounts(): Observable<BankAccount[]> {
     const me = this,
-          httpOptions = me.createHttpOptionsWithToken();
+          httpOptions = me.operationHelper.createHttpOptionsWithToken();
 
     return me.http.get<BankAccount[]>(me.bankAccountsUrl, httpOptions)
               .pipe(
                 tap(any => console.log('Bank accounts fetched successfully.')),
-                catchError(me.handleError('getBankAccounts', []))
+                catchError(me.operationHelper.handleError('getBankAccounts', []))
               );
   }
 
   /**.*/
   createBankAccounts(bankAccounts: BankAccount[]): Observable<BankAccount[]> {
     const me = this,
-          httpOptions = me.createHttpOptionsWithToken();
+          httpOptions = me.operationHelper.createHttpOptionsWithToken();
 
     return this.http.post<BankAccount[]>(me.bankAccountsUrl, bankAccounts, httpOptions)
               .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
-                tap((bankAccounts: BankAccount[]) => console.log(`A total of ${bankAccounts.length} bank accounts were successfully created.`)),
-                catchError(me.handleError<BankAccount[]>('BankAccount: failed to create new BankAccount.'))
+                tap( any => console.log(`A total of ${bankAccounts.length} bank accounts were successfully created.`)),
+                catchError(me.operationHelper.handleError('BankAccount: failed to create new BankAccount.'))
               );
-  }
-
-  //---- Private methods
-  /**
-   * @param operation - name of the operation that failed.
-   * @param result - optional value to return as the observable result
-   */
-  private handleError<T>(operation = 'operation', result?: T) {
-    const me = this;
-
-    return (error: any): Observable<T> => {
-      /* if (error.status === 401) {
-        me.router.navigate(['/login']);
-      } */
-      // console.error(error.error.message);
-      console.log(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
-  }
-
-  /**.*/
-  private createHttpOptionsWithToken() {
-    let authToken = this.globals.getTokenFromLocalStorage();
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${authToken}`
-      })
-    };
   }
 }

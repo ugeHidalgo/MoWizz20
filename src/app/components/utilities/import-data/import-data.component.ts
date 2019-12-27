@@ -3,6 +3,8 @@ import * as XLSX from 'xlsx';
 import { ImportBankAccountsHelper } from './helpers/import-bankAccounts.helper';
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
 import { ToastrService } from 'ngx-toastr';
+import { ImportCompaniesHelper } from './helpers/import-companies.helper';
+import { CompaniesService } from 'src/app/services/companies/companies.service';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -21,6 +23,7 @@ export class ImportDataComponent {
   loading: boolean = false;
   selectedEntity : string;
   importBankAccountsHelper: ImportBankAccountsHelper;
+  importCompaniesHelper: ImportCompaniesHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   dataEntities: DataEntity[] = [
@@ -28,15 +31,17 @@ export class ImportDataComponent {
     {value: 'concept', viewValue: 'Conceptos'},
     {value: 'costCenters', viewValue: 'Centros de gasto'},
     {value: 'transactions', viewValue: 'Movimientos'},
-    {value: 'transactionTypes', viewValue: 'Tipos de movimientos'},
+    {value: 'companies', viewValue: 'Definiciones de libros contables'},
     {value: 'users', viewValue: 'Usuarios'}
   ];
 
   constructor(
     private toastr: ToastrService,
-    private bankAccountsService: BankAccountsService
+    private bankAccountsService: BankAccountsService,
+    private companiesService: CompaniesService
   ) {
     this.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
+    this.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
   }
 
   onFileChange(evt: any) {
@@ -70,8 +75,8 @@ export class ImportDataComponent {
               me.toastr.success(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`);
             },
             error => {
-              me.toastr.error(error.message);
               me.loading = false;
+              me.toastr.error(error.message);
             });
         break;
 
@@ -87,8 +92,16 @@ export class ImportDataComponent {
           //me.importTransactionsHelper.import(me.data);
         break;
 
-      case "transactionTypes":
-          //me.importTransactionTypesHelper.import(me.data);
+      case "companies":
+          me.importCompaniesHelper.import(me.data)
+          .subscribe(savedCompanies => {
+            me.loading = false;
+            me.toastr.success(`A total of ${savedCompanies.length} companies were successfully created.`);
+          },
+          error => {
+            me.loading = false;
+            me.toastr.error(error.message);
+          });
         break;
 
       case "users":
