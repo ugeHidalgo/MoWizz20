@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BankAccount } from '../../models/bankAccount';
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
 import { GlobalsService } from 'src/app/globals/globals.service';
+import { BankAccount } from '../../models/bankAccount';
+import { tap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { OperationsHelper } from '../operations.helper';
 
@@ -13,7 +13,7 @@ import { OperationsHelper } from '../operations.helper';
 })
 export class BankAccountsService {
   private bankAccountsUrl;
-  private operationHelper;
+  private operationHelper: OperationsHelper;
 
   constructor(
     private http: HttpClient,
@@ -47,7 +47,7 @@ export class BankAccountsService {
               .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
                 tap( any => console.log(`A total of ${bankAccounts.length} bank accounts were successfully created.`)),
-                catchError(me.operationHelper.handleError('BankAccount: failed to create new BankAccount.'))
+                catchError(me.operationHelper.handleError<BankAccount[]>('createBankAccounts', []))
               );
   }
 }

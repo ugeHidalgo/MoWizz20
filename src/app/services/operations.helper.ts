@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { GlobalsService } from '../globals/globals.service';
 import { Router } from '@angular/router';
@@ -22,6 +22,9 @@ export class OperationsHelper {
       console.log(`${operation} failed: ${error.message}`);
       if (error.status === 401) {
         me.router.navigate(['/login']);
+      }
+      if (error.status === 0) {
+        return throwError(error);
       }
       return of(result as T);
     };

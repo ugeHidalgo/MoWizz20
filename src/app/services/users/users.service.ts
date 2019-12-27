@@ -14,7 +14,7 @@ export class UsersService {
 
   private usersUrl;
   private grantUserAccessUrl;
-  private operationHelper;
+  private operationHelper: OperationsHelper;
 
   constructor(
     private http: HttpClient,
@@ -32,16 +32,23 @@ export class UsersService {
   registerUser(user: User): Observable<User> {
     const me = this;
 
-    return me.http.post<User>(this.usersUrl, user)
+    return me.http.post<User>(me.usersUrl, user)
     .pipe(
       // tslint:disable-next-line:no-shadowed-variable
       tap( (savedUser: User) => console.log(`User ${savedUser.userName} successfully created.`)),
-      catchError(me.operationHelper.handleError('Failed to create new user.'))
+      catchError(me.operationHelper.handleError<User>('registerUSer'))
     );
   }
 
   /**.*/
   isUserAuthenticated(userData: any): Observable<any> {
-    return this.http.post<any>(this.grantUserAccessUrl, userData);
+    const me = this;
+
+    return me.http.post<any>(me.grantUserAccessUrl, userData)
+    .pipe(
+      // tslint:disable-next-line:no-shadowed-variable
+      tap( (loggedUser: User) => console.log(`User ${loggedUser.userName} successfully created.`)),
+      catchError(me.operationHelper.handleError<User>('isUserAuthenticated'))
+    );
   }
 }
