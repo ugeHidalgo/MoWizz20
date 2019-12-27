@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { BankAccount } from '../../models/bankAccount';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { Router } from '@angular/router';

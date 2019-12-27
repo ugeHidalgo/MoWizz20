@@ -33,7 +33,8 @@ export class RegisterComponent {
       firstName: '',
       lastName: '',
       password: '',
-      eMail: [ '', Validators.email ]
+      eMail: [ '', Validators.email ],
+      company: [ '', Validators.required ]
     });
   }
 
@@ -44,12 +45,13 @@ export class RegisterComponent {
     me.usersService.registerUser(me.user)
       .subscribe(
         newUserAdded => {
+          me.loading = false;
           me.toastr.success(`User ${newUserAdded.userName} was successfully added.`);
           me.router.navigate(['/login']);
         },
         error => {
-          me.toastr.error(error.message);
           me.loading = false;
+          me.toastr.error(error.message);
         }
       );
   }
