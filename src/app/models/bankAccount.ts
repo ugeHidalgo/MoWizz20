@@ -9,5 +9,6 @@ export class BankAccount {
     updated: Date;
     username: string;
     amount: number;
+    company: string;
     __v: number;
 }

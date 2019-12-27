@@ -19,7 +19,8 @@ export class ImportBankAccountsHelper {
         descriptionIndex,
         activeIndex,
         ibanIndex,
-        commentsIndex;
+        commentsIndex,
+        companyIndex;
 
     me.fieldNames = data[0];
     userNameIndex = me.fieldNames.indexOf('UserName');
@@ -28,6 +29,7 @@ export class ImportBankAccountsHelper {
     activeIndex = me.fieldNames.indexOf('Active');
     ibanIndex = me.fieldNames.indexOf('Iban');
     commentsIndex = me.fieldNames.indexOf('Comments');
+    companyIndex = me.fieldNames.indexOf('Company');
 
     for (var f=1; f<data.length; f++)
     {
@@ -41,6 +43,7 @@ export class ImportBankAccountsHelper {
       bankAccount.iban = rowData[ibanIndex];
       bankAccount.comments = rowData[commentsIndex];
       bankAccount.updated = new Date();
+      bankAccount.company = rowData[companyIndex];
 
       bankAccountsToSave.push(bankAccount);
     }
