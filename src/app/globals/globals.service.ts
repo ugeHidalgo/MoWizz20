@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GlobalsService {
 
   userNameLogged: string;
+  companyInUse: string;
   localStorageStore = 'currentUser';
 
   //server = 'https://apimowizz2ehh.azurewebsites.net/';  //To be used when API is in production
@@ -19,15 +20,23 @@ export class GlobalsService {
     this.userNameLogged = userName;
   }
 
+  setCompany(company: string) {
+    this.companyInUse = company;
+  }
+
   clearUser() {
-    this.userNameLogged = undefined;
+    const me = this;
+
+    me.userNameLogged = undefined;
+    me.companyInUse = undefined;
     this.removeUserDataFromLocalStorage();
   }
 
-  storeUserDataInLocalStorage(userName, token) {
+  storeUserDataInLocalStorage(userName, company, token) {
     localStorage.setItem(this.localStorageStore, JSON.stringify({
       app: 'MoWizz20',
       username: userName,
+      company: company,
       token: token
     }));
   }
@@ -45,6 +54,13 @@ export class GlobalsService {
           userData = me.getUserDataFromLocalStorage();
 
     return userData ? userData.username : '';
+  }
+
+  getCompanyFromLocalStorage() {
+    const me = this,
+          userData = me.getUserDataFromLocalStorage();
+
+    return userData ? userData.company : '';
   }
 
   getTokenFromLocalStorage() {

@@ -32,7 +32,8 @@ export class LoginComponent {
       .subscribe(
         data => {
           me.globals.setUser(me.model.userName);
-          me.globals.storeUserDataInLocalStorage(me.model.userName, data.token);
+          me.globals.setCompany(data.company);
+          me.globals.storeUserDataInLocalStorage(me.model.userName, data.company, data.token);
           me.loading = false;
           me.toastr.success("Bienvenido " + me.model.userName);
           me.router.navigate(['/mainscreen']);

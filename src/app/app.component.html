@@ -1,29 +1,3 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
-
-<!-- Toolbar -->
-<!-- <ul class="navbar-nav mr-auto">
-    <li class="nav-item" *ngIf="globals.userNameLogged">
-        <a class="nav-link waves-light" mdbRippleRadius [routerLink]="['/']">Inicio</a>
-    </li> -->
-    <!-- Files Dropdown -->
-<!--     <li class="nav-item dropdown" *ngIf="globals.userNameLogged" dropdown>
-        <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-light" mdbRippleRadius>
-        Archivos<span class="caret"></span></a>
-        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbRippleRadius [routerLink]="['/bankaccounts']">Cuentas</a>
-        </div>
-    </li>
-</ul> -->
-
  <mat-toolbar color="primary">
     <mat-toolbar-row>
        <span><a mat-button routerLink="/mainscreen">Inicio</a></span>
@@ -101,7 +75,8 @@
 
   <!-- Footer -->
   <footer>
-      By UgeHidalgo 2019.
+      <p>By UgeHidalgo 2019. - </p>
+      <p *ngIf="globals.companyInUse">Libro contable: {{globals.companyInUse}}</p>
   </footer>
 
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

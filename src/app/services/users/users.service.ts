@@ -47,7 +47,7 @@ export class UsersService {
     return me.http.post<any>(me.grantUserAccessUrl, userData)
     .pipe(
       // tslint:disable-next-line:no-shadowed-variable
-      tap( (loggedUser: User) => console.log(`User ${loggedUser.userName} successfully created.`)),
+      tap( (loggedUser: User) => console.log(`User ${loggedUser.userName} successfully logged for company ${loggedUser.company}.`)),
       catchError(me.operationHelper.handleError<User>('isUserAuthenticated'))
     );
   }
