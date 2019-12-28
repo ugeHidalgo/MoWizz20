@@ -14,7 +14,6 @@ export class LoginComponent {
 
   model: any = {};
   angular: any;
-  loading = false;
 
   constructor(
     private router: Router,
@@ -27,14 +26,14 @@ export class LoginComponent {
   login() {
     const me = this;
 
-    me.loading = true;
+    me.globals.maskScreen();
     me.usersService.isUserAuthenticated(me.model)
       .subscribe(
         data => {
           me.globals.setUser(me.model.userName);
           me.globals.setCompany(data.company);
           me.globals.storeUserDataInLocalStorage(me.model.userName, data.company, data.token);
-          me.loading = false;
+          me.globals.unMaskScreen();
           me.toastr.success("Bienvenido " + me.model.userName);
           me.router.navigate(['/mainscreen']);
         },
@@ -45,7 +44,7 @@ export class LoginComponent {
             errorMessage = 'Usuario o contraseña erróneos. Inténtelo de nuevo.';
           }
           me.globals.clearUser();
-          me.loading = false;
+          me.globals.unMaskScreen();
           me.toastr.error(errorMessage);
         }
       );

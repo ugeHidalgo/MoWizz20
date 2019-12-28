@@ -12,7 +12,6 @@ export class BankAccountsComponent {
 
   bankAccounts: any[];
   usedCompany: string;
-  loading: boolean = false;
 
   constructor(
     private bankAccountsService: BankAccountsService,
@@ -28,14 +27,14 @@ export class BankAccountsComponent {
   private getBankAccountsForCompany(company: string): void {
     const me = this;
 
-    me.loading = true
+    me.globals.maskScreen();
     me.bankAccountsService.getBankAccountsForCompany(company)
       .subscribe(bankAccounts => {
         me.bankAccounts = bankAccounts;
-        me.loading = false;
+        me.globals.unMaskScreen();
       },
       error => {
-        me.loading = false;
+        me.globals.unMaskScreen();
         me.toastr.error(error.message);
       });
   }

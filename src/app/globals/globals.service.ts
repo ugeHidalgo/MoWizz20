@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalsService {
 
+  isScreenMasked: boolean = false;
   userNameLogged: string;
   companyInUse: string;
   localStorageStore = 'currentUser';
@@ -14,6 +15,14 @@ export class GlobalsService {
   //server = 'https://localhost:5001/';  // To be used when API is in development mode and without connection to any network
 
   constructor() {
+  }
+
+  maskScreen() {
+    this.isScreenMasked = true;
+  }
+
+  unMaskScreen() {
+    this.isScreenMasked = false;
   }
 
   setUser(userName: string) {

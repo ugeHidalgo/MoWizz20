@@ -5,6 +5,7 @@ import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts
 import { ToastrService } from 'ngx-toastr';
 import { ImportCompaniesHelper } from './helpers/import-companies.helper';
 import { CompaniesService } from 'src/app/services/companies/companies.service';
+import { GlobalsService } from 'src/app/globals/globals.service';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -20,7 +21,6 @@ export interface DataEntity {
 export class ImportDataComponent {
 
   data: AOA;
-  loading: boolean = false;
   selectedEntity : string;
   importBankAccountsHelper: ImportBankAccountsHelper;
   importCompaniesHelper: ImportCompaniesHelper;
@@ -38,7 +38,8 @@ export class ImportDataComponent {
   constructor(
     private toastr: ToastrService,
     private bankAccountsService: BankAccountsService,
-    private companiesService: CompaniesService
+    private companiesService: CompaniesService,
+    private globals: GlobalsService
   ) {
     this.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
     this.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
@@ -65,17 +66,17 @@ export class ImportDataComponent {
 	import(): void {
     const me = this;
 
-    me.loading = true;
+    me.globals.maskScreen();
     if (!me.selectedEntity) return;
     switch (me.selectedEntity) {
       case "banksAccount":
           me.importBankAccountsHelper.import(me.data)
             .subscribe(savedBankAccounts => {
-              me.loading = false;
+              me.globals.unMaskScreen();
               me.toastr.success(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`);
             },
             error => {
-              me.loading = false;
+              me.globals.unMaskScreen();
               me.toastr.error(error.message);
             });
         break;
@@ -95,11 +96,11 @@ export class ImportDataComponent {
       case "companies":
           me.importCompaniesHelper.import(me.data)
           .subscribe(savedCompanies => {
-            me.loading = false;
+            me.globals.unMaskScreen();
             me.toastr.success(`A total of ${savedCompanies.length} companies were successfully created.`);
           },
           error => {
-            me.loading = false;
+            me.globals.unMaskScreen();
             me.toastr.error(error.message);
           });
         break;

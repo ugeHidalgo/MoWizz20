@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { GlobalsService } from 'src/app/globals/globals.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,6 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
 
   user: User = new User();
-  loading = false;
   validatingForm: FormGroup;
 
   constructor(
@@ -22,7 +22,8 @@ export class RegisterComponent {
     private usersService: UsersService,
     private toastr: ToastrService,
     private routeLocation: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private globals: GlobalsService
     ) {
       this.createForm();
   }
@@ -41,16 +42,16 @@ export class RegisterComponent {
   register() {
     const me = this;
 
-    me.loading = true;
+    me.globals.maskScreen();
     me.usersService.registerUser(me.user)
       .subscribe(
         newUserAdded => {
-          me.loading = false;
+          me.globals.unMaskScreen();
           me.toastr.success(`User ${newUserAdded.userName} was successfully added.`);
           me.router.navigate(['/login']);
         },
         error => {
-          me.loading = false;
+          me.globals.unMaskScreen();
           me.toastr.error(error.message);
         }
       );

@@ -1,39 +1,33 @@
-<div id="screen-container">
-	<div id="mask-overlay" *ngIf="loading">
-		<mat-spinner class="mask-spinner"></mat-spinner>
-	</div>
-	<div id="screen-to-mask" [style.opacity]="loading ? 0.6 : 1.0">
-		<div class="import-step">
-			<mat-form-field>
-				<mat-label bold>1º Selecione que va a importar.</mat-label>
-				<mat-select [(ngModel)]="selectedEntity" required>
-					<mat-option *ngFor="let dataEntity of dataEntities" [value]="dataEntity.value" >
-						{{dataEntity.viewValue}}
-					</mat-option>
-				</mat-select>
-			</mat-form-field>
-		</div>
 
-		<div class="import-step">
-			<button type="button" mat-raised-button (click)="fileInput.click()">2º Indique fichero con los datos a importar.</button>
-			<input hidden (change)="onFileChange($event)" #fileInput type="file" id="file">
-		</div>
+<div class="import-step">
+	<mat-form-field>
+		<mat-label bold>1º Selecione que va a importar.</mat-label>
+		<mat-select [(ngModel)]="selectedEntity" required>
+			<mat-option *ngFor="let dataEntity of dataEntities" [value]="dataEntity.value" >
+				{{dataEntity.viewValue}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>
 
-		<div class="import-step">
-			<button type="button" mat-raised-button (click)="import()" [disabled]="!selectedEntity">3º Comenzar la importación.</button>
-		</div>
+<div class="import-step">
+	<button type="button" mat-raised-button (click)="fileInput.click()">2º Indique fichero con los datos a importar.</button>
+	<input hidden (change)="onFileChange($event)" #fileInput type="file" id="file">
+</div>
 
-		<mat-divider></mat-divider>
+<div class="import-step">
+	<button type="button" mat-raised-button (click)="import()" [disabled]="!selectedEntity">3º Comenzar la importación.</button>
+</div>
 
-		<div class="import-step">
-			<mat-label>Datos a importar.</mat-label>
-			<table class="sjs-table">
-				<tr *ngFor="let row of data">
-					<td *ngFor="let val of row">
-						{{val}}
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+<mat-divider></mat-divider>
+
+<div class="import-step">
+	<mat-label>Datos a importar.</mat-label>
+	<table class="sjs-table">
+		<tr *ngFor="let row of data">
+			<td *ngFor="let val of row">
+				{{val}}
+			</td>
+		</tr>
+	</table>
 </div>
