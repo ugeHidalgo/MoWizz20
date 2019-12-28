@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalsService } from 'src/app/globals/globals.service';
 
 @Component({
   selector: 'app-bank-accounts',
@@ -10,23 +11,25 @@ import { ToastrService } from 'ngx-toastr';
 export class BankAccountsComponent {
 
   bankAccounts: any[];
+  usedCompany: string;
   loading: boolean = false;
 
   constructor(
     private bankAccountsService: BankAccountsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private globals: GlobalsService
   ) {
     const me = this;
-
-    me.getBankAccounts();
+    me.usedCompany = globals.getCompany();
+    me.getBankAccountsForCompany(me.usedCompany);
 
   }
 
-  private getBankAccounts(): void {
+  private getBankAccountsForCompany(company: string): void {
     const me = this;
 
     me.loading = true
-    me.bankAccountsService.getBankAccounts()
+    me.bankAccountsService.getBankAccountsForCompany(company)
       .subscribe(bankAccounts => {
         me.bankAccounts = bankAccounts;
         me.loading = false;

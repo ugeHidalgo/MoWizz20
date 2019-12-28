@@ -39,6 +39,19 @@ export class BankAccountsService {
   }
 
   /**.*/
+  getBankAccountsForCompany(company: string): Observable<BankAccount[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          bankAccountsForCompanyUrl = `${me.bankAccountsUrl}/${company}`;
+
+    return me.http.get<BankAccount[]>(bankAccountsForCompanyUrl, httpOptions)
+              .pipe(
+                tap(any => console.log(`Bank accounts for company ${company} fetched successfully.`)),
+                catchError(me.operationHelper.handleError('getBankAccountsForCompany', []))
+              );
+  }
+
+  /**.*/
   createBankAccounts(bankAccounts: BankAccount[]): Observable<BankAccount[]> {
     const me = this,
           httpOptions = me.operationHelper.createHttpOptionsWithToken();

@@ -24,6 +24,13 @@ export class GlobalsService {
     this.companyInUse = company;
   }
 
+  getCompany() {
+    if (!this.companyInUse) {
+      this.companyInUse = this.getCompanyFromLocalStorage();
+    }
+    return this.companyInUse;
+  }
+
   clearUser() {
     const me = this;
 
