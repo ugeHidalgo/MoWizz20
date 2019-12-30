@@ -8,6 +8,8 @@ import { CompaniesService } from 'src/app/services/companies/companies.service';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { ConceptsService } from 'src/app/services/concepts/concepts.service';
 import { ImportConceptsHelper } from './helpers/import-concepts.helper';
+import { ImportCostCentresHelper } from './helpers/import-costCentres.helper';
+import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -27,6 +29,7 @@ export class ImportDataComponent {
   importBankAccountsHelper: ImportBankAccountsHelper;
   importCompaniesHelper: ImportCompaniesHelper;
   importConceptsHelper: ImportConceptsHelper;
+  importCostCentresHelper: ImportCostCentresHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   dataEntities: DataEntity[] = [
@@ -42,6 +45,7 @@ export class ImportDataComponent {
     private bankAccountsService: BankAccountsService,
     private companiesService: CompaniesService,
     private conceptsService: ConceptsService,
+    private costCentresService: CostCentresService,
     private globals: GlobalsService
   ) {
     var me = this;
@@ -49,6 +53,8 @@ export class ImportDataComponent {
     me.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
     me.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
     me.importConceptsHelper = new ImportConceptsHelper(conceptsService);
+    me.importCostCentresHelper = new ImportCostCentresHelper(costCentresService);
+
   }
 
   onFileChange(evt: any) {
@@ -100,7 +106,15 @@ export class ImportDataComponent {
         break;
 
       case "costCenters":
-          //me.importCostCentersHelper.import(me.data);
+        me.importCostCentresHelper.import(me.data)
+        .subscribe(savedCostCentres => {
+          me.globals.unMaskScreen();
+          me.toastr.success(`A total of ${savedCostCentres.length} cost centres were successfully created.`);
+        },
+        error => {
+          me.globals.unMaskScreen();
+          me.toastr.error(error.message);
+        });
         break;
 
       case "transactions":
