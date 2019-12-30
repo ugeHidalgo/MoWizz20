@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ImportCompaniesHelper } from './helpers/import-companies.helper';
 import { CompaniesService } from 'src/app/services/companies/companies.service';
 import { GlobalsService } from 'src/app/globals/globals.service';
+import { ConceptsService } from 'src/app/services/concepts/concepts.service';
+import { ImportConceptsHelper } from './helpers/import-concepts.helper';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -24,6 +26,7 @@ export class ImportDataComponent {
   selectedEntity : string;
   importBankAccountsHelper: ImportBankAccountsHelper;
   importCompaniesHelper: ImportCompaniesHelper;
+  importConceptsHelper: ImportConceptsHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   dataEntities: DataEntity[] = [
@@ -31,18 +34,21 @@ export class ImportDataComponent {
     {value: 'concept', viewValue: 'Conceptos'},
     {value: 'costCenters', viewValue: 'Centros de gasto'},
     {value: 'transactions', viewValue: 'Movimientos'},
-    {value: 'companies', viewValue: 'Definiciones de libros contables'},
-    {value: 'users', viewValue: 'Usuarios'}
+    {value: 'companies', viewValue: 'Definiciones de libros contables'}
   ];
 
   constructor(
     private toastr: ToastrService,
     private bankAccountsService: BankAccountsService,
     private companiesService: CompaniesService,
+    private conceptsService: ConceptsService,
     private globals: GlobalsService
   ) {
-    this.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
-    this.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
+    var me = this;
+
+    me.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
+    me.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
+    me.importConceptsHelper = new ImportConceptsHelper(conceptsService);
   }
 
   onFileChange(evt: any) {
@@ -82,7 +88,15 @@ export class ImportDataComponent {
         break;
 
       case "concept":
-          //me.importConceptsHelper.import(me.data);
+        me.importConceptsHelper.import(me.data)
+        .subscribe(savedConcepts => {
+          me.globals.unMaskScreen();
+          me.toastr.success(`A total of ${savedConcepts.length} concepts were successfully created.`);
+        },
+        error => {
+          me.globals.unMaskScreen();
+          me.toastr.error(error.message);
+        });
         break;
 
       case "costCenters":
@@ -105,12 +119,8 @@ export class ImportDataComponent {
           });
         break;
 
-      case "users":
-          //me.importUsersHelper.import(me.data);
+      default:
         break;
-
-        default:
-          break;
     }
 
   }
