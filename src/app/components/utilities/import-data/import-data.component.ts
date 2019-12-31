@@ -10,6 +10,8 @@ import { ConceptsService } from 'src/app/services/concepts/concepts.service';
 import { ImportConceptsHelper } from './helpers/import-concepts.helper';
 import { ImportCostCentresHelper } from './helpers/import-costCentres.helper';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
+import { ImportTransactionsHelper } from './helpers/import-transactions.helper';
+import { TransactionsService } from 'src/app/services/transactions/transactions.service';
 
 type AOA = any[][];
 export interface DataEntity {
@@ -29,6 +31,7 @@ export class ImportDataComponent {
   importBankAccountsHelper: ImportBankAccountsHelper;
   importCompaniesHelper: ImportCompaniesHelper;
   importConceptsHelper: ImportConceptsHelper;
+  importTransactionsHelper: ImportTransactionsHelper;
   importCostCentresHelper: ImportCostCentresHelper;
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
@@ -46,6 +49,7 @@ export class ImportDataComponent {
     private companiesService: CompaniesService,
     private conceptsService: ConceptsService,
     private costCentresService: CostCentresService,
+    private transactionsService: TransactionsService,
     private globals: GlobalsService
   ) {
     var me = this;
@@ -54,7 +58,7 @@ export class ImportDataComponent {
     me.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
     me.importConceptsHelper = new ImportConceptsHelper(conceptsService);
     me.importCostCentresHelper = new ImportCostCentresHelper(costCentresService);
-
+    me.importTransactionsHelper = new ImportTransactionsHelper(transactionsService);
   }
 
   onFileChange(evt: any) {
@@ -118,7 +122,15 @@ export class ImportDataComponent {
         break;
 
       case "transactions":
-          //me.importTransactionsHelper.import(me.data);
+        me.importTransactionsHelper.import(me.data)
+        .subscribe(savedTransactions => {
+          me.globals.unMaskScreen();
+          me.toastr.success(`A total of ${savedTransactions.length} transactions were successfully created.`);
+        },
+        error => {
+          me.globals.unMaskScreen();
+          me.toastr.error(error.message);
+        });
         break;
 
       case "companies":
