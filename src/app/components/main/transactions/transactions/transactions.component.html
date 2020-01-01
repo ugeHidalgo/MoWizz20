@@ -1,1 +1,15 @@
-<p>transactions works!</p>
+<ng-container *ngFor="let transaction of transactions">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{transaction.date}}</mat-card-title>
+      <mat-card-subtitle>{{transaction.amount}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        {{transaction.transactionType}}
+        {{transaction.bankAccount}}
+        {{transaction.costCentre}}
+        {{transaction.concept}}
+        {{transaction.comments}}
+    </mat-card-content>
+  </mat-card>
+</ng-container>

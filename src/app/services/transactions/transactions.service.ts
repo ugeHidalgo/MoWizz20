@@ -29,16 +29,29 @@ export class TransactionsService {
     me.operationHelper = new OperationsHelper(globals,router);
   }
 
-    /**.*/
-    importTransactions(transactiosToImport: ImportTransaction[]): Observable<Transaction[]> {
-      const me = this,
-            httpOptions = me.operationHelper.createHttpOptionsWithToken();
+  /**.*/
+  getTransactionsForCompany(company: string): Observable<Transaction[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          transactionsForCompanyUrl = `${me.transactionsUrl}/${company}`;
 
-      return this.http.post<Transaction[]>(me.transactionsImportUrl, transactiosToImport, httpOptions)
-                .pipe(
-                  // tslint:disable-next-line:no-shadowed-variable
-                  tap(any => console.log(`A total of ${transactiosToImport.length} transactions were successfully imported.`)),
-                  catchError(me.operationHelper.handleError<Transaction[]>('importConcepts', []))
-                );
-    }
+    return me.http.get<Transaction[]>(transactionsForCompanyUrl, httpOptions)
+              .pipe(
+                tap(any => console.log(`Transactions for company ${company} fetched successfully.`)),
+                catchError(me.operationHelper.handleError('getTransactionsForCompany', []))
+              );
+  }
+
+  /**.*/
+  importTransactions(transactiosToImport: ImportTransaction[]): Observable<Transaction[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken();
+
+    return this.http.post<Transaction[]>(me.transactionsImportUrl, transactiosToImport, httpOptions)
+              .pipe(
+                // tslint:disable-next-line:no-shadowed-variable
+                tap(any => console.log(`A total of ${transactiosToImport.length} transactions were successfully imported.`)),
+                catchError(me.operationHelper.handleError<Transaction[]>('importConcepts', []))
+              );
+  }
 }
