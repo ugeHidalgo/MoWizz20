@@ -46,11 +46,30 @@ export class ImportTransactionsHelper {
       importTransaction.bankAccountName = rowData[bankAccountIndex];
       importTransaction.company = rowData[companyIndex];
       importTransaction.comments = rowData[commentsIndex];
-      importTransaction.date = new Date(rowData[dateIndex]);
+      importTransaction.date = me.excelDateToJSDate(rowData[dateIndex]);
 
       importTransactionsToSave.push(importTransaction);
     }
 
     return me.service.importTransactions(importTransactionsToSave);
   }
+
+  excelDateToJSDate(value) {
+    var utc_days  = Math.floor(value - 25569);
+    var utc_value = utc_days * 86400;
+    var date_info = new Date(utc_value * 1000);
+
+    var fractional_day = value - Math.floor(value) + 0.0000001;
+
+    var total_seconds = Math.floor(86400 * fractional_day);
+
+    var seconds = total_seconds % 60;
+
+    total_seconds -= seconds;
+
+    var hours = Math.floor(total_seconds / (60 * 60));
+    var minutes = Math.floor(total_seconds / 60) % 60;
+
+    return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+ }
 };
