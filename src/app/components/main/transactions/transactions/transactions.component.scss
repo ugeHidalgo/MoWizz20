@@ -1,0 +1,38 @@
+table {
+  width: 100%;
+}
+
+.mat-header-row {
+  height: 25px;
+}
+
+.mat-header-cell {
+  padding: 5px;
+}
+
+.mat-row {
+  height: 20px;
+}
+
+.mat-cell {
+  padding: 5px;
+}
+
+.mat-column {
+  margin-right: 10px;
+}
+
+.mat-column-date{
+  //your custom css
+  text-align: left;
+}
+
+.mat-column-amount{
+  //your custom css
+  text-align: right;
+}
+
+.mat-column-comments{
+  //your custom css
+  text-align: left;
+}

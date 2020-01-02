@@ -10,6 +10,7 @@ import { GlobalsService } from 'src/app/globals/globals.service';
 })
 export class TransactionsComponent {
   transactions: any[];
+  displayedColumns: string[];
   usedCompany: string;
 
   constructor(
@@ -18,6 +19,7 @@ export class TransactionsComponent {
     private globals: GlobalsService
   ) {
     const me = this;
+    me.displayedColumns = ['date','amount','comments'];
     me.usedCompany = globals.getCompany();
     me.getTransactionsForCompany(me.usedCompany);
   }

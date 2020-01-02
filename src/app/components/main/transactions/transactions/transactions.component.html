@@ -1,15 +1,22 @@
-<ng-container *ngFor="let transaction of transactions">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{transaction.date}}</mat-card-title>
-      <mat-card-subtitle>{{transaction.amount}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        {{transaction.transactionType}}
-        {{transaction.bankAccount}}
-        {{transaction.costCentre}}
-        {{transaction.concept}}
-        {{transaction.comments}}
-    </mat-card-content>
-  </mat-card>
-</ng-container>
+
+<table mat-table class="mat-elevation-z8" [dataSource]="transactions">
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Fecha</th>
+    <td mat-cell *matCellDef="let transaction">{{transaction.date | date:'dd/MM/yyyy'}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell  *matHeaderCellDef>Importe</th>
+    <td mat-cell *matCellDef="let transaction">{{transaction.amount}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="comments">
+    <th mat-header-cell *matHeaderCellDef>Concepto</th>
+    <td mat-cell *matCellDef="let transaction">{{transaction.comments}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
