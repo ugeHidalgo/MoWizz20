@@ -5,6 +5,7 @@ import { GlobalsService } from 'src/app/globals/globals.service';
 import { TransactionType, TransactionTypes } from 'src/app/models/transactionType';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Transaction } from 'src/app/models/transaction';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transactions',
@@ -24,7 +25,8 @@ export class TransactionsComponent {
   constructor(
     private transactionsService: TransactionsService,
     private toastr: ToastrService,
-    private globals: GlobalsService
+    private globals: GlobalsService,
+    private router: Router
   ) {
     const me = this;
     me.displayedColumns = ['date', 'type', 'amount', 'account', 'concept', 'comments'];
@@ -47,5 +49,21 @@ export class TransactionsComponent {
         me.globals.unMaskScreen();
         me.toastr.error(error.message);
       });
+  }
+
+  private onClickAddButton() {
+    const pathToTransactionDetail = `/transactiondetail/-1`;
+
+    this.router.navigate([pathToTransactionDetail]);
+  }
+
+  private onClickEditButton() {
+    const pathToTransactionDetail = `/transactiondetail/9823479823`;
+
+    this.router.navigate([pathToTransactionDetail]);
+  }
+
+  private onClickRemoveButton() {
+
   }
 }

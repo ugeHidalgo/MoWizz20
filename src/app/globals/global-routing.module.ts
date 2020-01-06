@@ -11,6 +11,7 @@ import { RegisterComponent } from '../login/register/register.component';
 import { ImportDataComponent } from '../components/utilities/import-data/import-data.component';
 import { TransactionTypesComponent } from '../components/main/transactionTypes/transaction-types/transaction-types.component';
 import { TransactionsComponent } from '../components/main/transactions/transactions/transactions.component';
+import { TransactionDetailComponent } from '../components/main/transactions/transaction-detail/transaction-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'concepts', component: ConceptsComponent },
   { path: 'transactiontypes', component: TransactionTypesComponent },
   { path: 'transactions', component: TransactionsComponent },
+  { path: 'transactiondetail/:id', component: TransactionDetailComponent },
   { path: 'import-data', component: ImportDataComponent },
   { path: '', redirectTo: 'mainscreen', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent }

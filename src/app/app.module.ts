@@ -27,6 +27,7 @@ import { ImportDataComponent } from './components/utilities/import-data/import-d
 import { TransactionsComponent } from './components/main/transactions/transactions/transactions.component';
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
 import { TransactionTypePipe } from './pipes/TransactionTypePipe';
+import { TransactionDetailComponent } from './components/main/transactions/transaction-detail/transaction-detail.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { TransactionTypePipe } from './pipes/TransactionTypePipe';
     ImportDataComponent,
     TransactionsComponent,
     TransactionTypesComponent,
-    TransactionTypePipe
+    TransactionTypePipe,
+    TransactionDetailComponent
   ],
   imports: [
     GlobalRoutingModule,
