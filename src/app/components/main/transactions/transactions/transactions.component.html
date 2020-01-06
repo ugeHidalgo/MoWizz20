@@ -1,8 +1,8 @@
 
 <div class="card">
   <div class="card-header">
-      <h4>Movimientos</h4>
-      <mat-toolbar color="primary">
+      <div class="card-title">Movimientos</div>
+      <mat-toolbar color="primary" class="my-header-bar">
         <button mat-raised-button color="primary" (click)="onClickAddButton()">
           <i class="material-icons">note_add</i>
           Añadir
@@ -15,12 +15,13 @@
           <i class="material-icons">delete</i>
           Borrar
         </button>
+        <i class="material-icons">search</i>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
       </mat-toolbar>
   </div>
   <div class="card-body">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
-    </mat-form-field>
     <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="date">
