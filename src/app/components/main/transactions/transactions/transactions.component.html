@@ -18,6 +18,9 @@
       </mat-toolbar>
   </div>
   <div class="card-body">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar...">
+    </mat-form-field>
     <table mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="date">

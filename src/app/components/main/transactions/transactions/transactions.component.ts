@@ -51,6 +51,10 @@ export class TransactionsComponent {
       });
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   private onClickAddButton() {
     const pathToTransactionDetail = `/transactiondetail/-1`;
 
