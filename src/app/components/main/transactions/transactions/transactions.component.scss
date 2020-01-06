@@ -3,6 +3,7 @@ table {
 }
 
 .mat-header-row {
+  font: bold;
   height: 25px;
 }
 
@@ -22,17 +23,35 @@ table {
   margin-right: 10px;
 }
 
-.mat-column-date{
-  //your custom css
+.mat-column-date,
+.mat-column-type,
+.mat-column-account,
+.mat-column-concept,
+.mat-column-comments {
   text-align: left;
 }
 
 .mat-column-amount{
-  //your custom css
   text-align: right;
 }
 
-.mat-column-comments{
-  //your custom css
-  text-align: left;
+.title-card {
+  border-radius: 4px;
+  border: none;
+  background-color: #95d420;
+  color: black;
+  height: 16px;
+  width: auto;
+  min-width: 30%;
+  position: relative;
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  font-weight: 600;
 }

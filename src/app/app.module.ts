@@ -26,6 +26,7 @@ import * as toastrCustomOptions from './messages/toastrCustomOptions';
 import { ImportDataComponent } from './components/utilities/import-data/import-data.component';
 import { TransactionsComponent } from './components/main/transactions/transactions/transactions.component';
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
+import { TransactionTypePipe } from './pipes/TransactionTypePipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TransactionTypesComponent } from './components/main/transactionTypes/tr
     LoginComponent,
     ImportDataComponent,
     TransactionsComponent,
-    TransactionTypesComponent
+    TransactionTypesComponent,
+    TransactionTypePipe
   ],
   imports: [
     GlobalRoutingModule,
