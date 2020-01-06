@@ -3,18 +3,20 @@
        <span><a mat-button routerLink="/mainscreen">Inicio</a></span>
 
        <div *ngIf="globals.userNameLogged">
-        <button mat-button [matMenuTriggerFor]="menuficheros">Ficheros</button>
-        <mat-menu #menuficheros="matMenu">
+        <button mat-button [matMenuTriggerFor]="setupmenu">Configurar</button>
+        <mat-menu #setupmenu="matMenu">
           <button mat-menu-item routerLink="/bankaccounts">Cuentas</button>
           <button mat-menu-item routerLink="/concepts">Conceptos</button>
           <mat-divider></mat-divider>
-          <button mat-menu-item routerLink="/transactiontypes">Tipos de movimientos</button>
-          <button mat-menu-item routerLink="/transactions">Movimientos</button>
+          <button mat-menu-item routerLink="/import-data">Importar datos</button>
         </mat-menu>
 
-        <button mat-button [matMenuTriggerFor]="menuutilidades">Utilidades</button>
-        <mat-menu yPosition="below" #menuutilidades="matMenu">
-          <button mat-menu-item routerLink="/import-data">Importacion de datos</button>
+        <button mat-button [matMenuTriggerFor]="transactionsmenu">Movimientos</button>
+        <mat-menu yPosition="below" #transactionsmenu="matMenu">
+          <button mat-menu-item routerLink="/transactiondetail/-1">Nuevo Movimiento</button>
+          <button mat-menu-item routerLink="/transactions">Ver Movimientos</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/transactiontypes">Tipos de movimientos</button>
         </mat-menu>
       </div>
 
