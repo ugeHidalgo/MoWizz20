@@ -1,13 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { slideInDownAnimation } from '../../../../globals/animations';
+
 
 @Component({
   selector: 'app-transaction-detail',
   templateUrl: './transaction-detail.component.html',
-  styleUrls: ['./transaction-detail.component.scss']
+  styleUrls: ['./transaction-detail.component.scss'],
+  animations: [ slideInDownAnimation ]
 })
 export class TransactionDetailComponent {
+
+  @HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('style.display') display = 'block';
+  @HostBinding('style.position') position = 'relative';
 
   title: string;
 
