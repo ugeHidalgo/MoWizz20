@@ -2,6 +2,9 @@ import { Component, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { slideInDownAnimation } from '../../../../globals/animations';
+import { GlobalsService } from 'src/app/globals/globals.service';
+import { TransactionsService } from 'src/app/services/transactions/transactions.service';
+import { Transaction } from 'src/app/models/transaction';
 
 
 @Component({
@@ -17,10 +20,13 @@ export class TransactionDetailComponent {
   @HostBinding('style.position') position = 'relative';
 
   title: string;
+  transaction: Transaction;
 
   constructor(
     private location : Location,
-    private route : ActivatedRoute
+    private route : ActivatedRoute,
+    protected globals: GlobalsService,
+    private transactionsService: TransactionsService
   ) { }
 
   ngOnInit() {
@@ -30,20 +36,31 @@ export class TransactionDetailComponent {
     if ( id==='-1' ){
       me.title ="Nuevo movimiento";
     } else {
-      me.title ="Editar movimiento";
+      me.getTransactionById(id);
     }
   }
 
-  private onClickGoBackButton() {
+  onClickGoBackButton() {
     this.location.back();
   }
 
-  private onClickSaveButton() {
+  onClickSaveButton() {
     this.location.back();
   }
 
-  private onClickUnDoButton() {
+  onClickUnDoButton() {
     this.location.back();
+  }
+
+  getTransactionById(id: string): void {
+    const me = this,
+          company = me.globals.getCompany();
+
+    me.transactionsService.getTransactionById(company, id)
+      .subscribe( transaction => {
+          me.transaction = transaction;
+          me.title ="Movimiento: " + me.transaction.comments;
+      });
   }
 
 }

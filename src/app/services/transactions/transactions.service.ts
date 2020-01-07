@@ -29,6 +29,19 @@ export class TransactionsService {
     me.operationHelper = new OperationsHelper(globals,router);
   }
 
+    /**.*/
+  getTransactionById(company: string, id: string): Observable<Transaction> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          getTransactionByIdUrl = `${me.transactionsUrl}/${company}/${id}`,
+          transaction = me.http.get<Transaction>(getTransactionByIdUrl, httpOptions)
+                      .pipe(
+                        tap(_ => console.log(`Transaction with id ${id} for company ${company} was fetched.`)),
+                        catchError(me.operationHelper.handleError<Transaction>(`getTransactionById (userName:${company}, id:${id})`))
+                      );
+    return transaction;
+  }
+
   /**.*/
   getTransactionsForCompany(company: string): Observable<Transaction[]> {
     const me = this,

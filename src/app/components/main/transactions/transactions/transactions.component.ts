@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent {
+  selectedRowId: string = '-1';
   transactions: any[];
   transactionTypes: TransactionType[] = TransactionTypes;
   displayedColumns: string[];
@@ -55,19 +56,23 @@ export class TransactionsComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  private onClickAddButton() {
+  onClickAddButton() {
     const pathToTransactionDetail = `/transactiondetail/-1`;
 
     this.router.navigate([pathToTransactionDetail]);
   }
 
-  private onClickEditButton() {
-    const pathToTransactionDetail = `/transactiondetail/9823479823`;
+  onClickEditButton() {
+    const pathToTransactionDetail = `/transactiondetail/` + this.selectedRowId;
 
     this.router.navigate([pathToTransactionDetail]);
   }
 
-  private onClickRemoveButton() {
+  onClickRemoveButton() {
 
+  }
+
+  selectRow(row) {
+    this.selectedRowId = row.id;
   }
 }
