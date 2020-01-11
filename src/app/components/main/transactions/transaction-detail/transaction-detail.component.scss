@@ -1,3 +1,8 @@
+.transaction-edition-card {
+  max-width: 350px;
+  padding: 10px 10px 20px 10px;
+}
+
 .card-title {
   border-radius: 4px;
   border: none;
@@ -21,4 +26,13 @@
 
 .my-header-bar > * {
   margin-right: 10px;
+}
+
+.card-body {
+  margin: 5px;
+  padding:  20px 0px 0px 0px;
+}
+
+.full-width{
+  width: 95%;
 }

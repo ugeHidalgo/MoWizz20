@@ -1,4 +1,4 @@
-<div class="card">
+<div class="transaction-edition-card">
   <div class="card-header">
     <div class="card-title">{{title}}</div>
     <mat-toolbar color="primary" class="my-header-bar">
@@ -14,5 +14,35 @@
     </mat-toolbar>
   </div>
   <div class="card-body">
+    <form>
+      <mat-form-field class="full-width">
+        <mat-label>Fecha:</mat-label>
+        <input  matInput  placeholder="Fecha"  name="date"  [(ngModel)]="transaction.date" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Tipo:</mat-label>
+        <input  matInput  placeholder="Tipo:" name="transactionType" [(ngModel)]="transaction.transactionType" required>
+      </mat-form-field>
+<!--       <mat-form-field class="full-width">
+        <mat-label>Cuenta:</mat-label>
+        <input  matInput  placeholder="Cuenta:" name="account" [(ngModel)]="transaction.bankAccount.name" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Centro de gasto:</mat-label>
+        <input  matInput  placeholder="Centro de gasto:" name="costCentre" [(ngModel)]="transaction.costCentre.name" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Concepto:</mat-label>
+        <input  matInput  placeholder="Concepto:"  name="concept" [(ngModel)]="transaction.concept.name" required>
+      </mat-form-field> -->
+      <mat-form-field class="full-width">
+        <mat-label>Cantidad:</mat-label>
+        <input  matInput  placeholder="Cantidad:"  name="amount" [(ngModel)]="transaction.amount" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Comentarios:</mat-label>
+        <input  matInput  placeholder="Comentarios:" name="comments" [(ngModel)]="transaction.comments" required>
+      </mat-form-field>
+    </form>
   </div>
 </div>

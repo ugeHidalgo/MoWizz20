@@ -1,4 +1,4 @@
-export class BankAccount {
+export class Account {
     _id: string;
     name: string;
     description: string;

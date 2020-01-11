@@ -13,12 +13,11 @@ import { MyMaterialModule } from './globals/material.module';
 
 import { UsersService } from './services/users/users.service';
 import { GlobalsService } from './globals/globals.service';
-import { BankAccountsService } from './services/bankAccounts/bank-accounts.service';
-
+import { AccountsService } from './services/accounts/accounts.service';
 
 import { PageNotFoundComponent } from './components/main/notFound/not-found.component';
 import { ConceptsComponent } from './components/main/concepts/concepts/concepts.component'
-import { BankAccountsComponent } from './components/main/bankAccounts/bank-accounts/bank-accounts.component';
+import { AccountsComponent } from './components/main/accounts/accounts/accounts.component';
 import { MainScreenComponent } from './components/main/mainScreen/main-screen.component';
 import { RegisterComponent } from './login/register/register.component';
 import { LoginComponent } from './login/login/login.component';
@@ -33,7 +32,7 @@ import { TransactionDetailComponent } from './components/main/transactions/trans
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    BankAccountsComponent,
+    AccountsComponent,
     ConceptsComponent,
     MainScreenComponent,
     RegisterComponent,
@@ -57,7 +56,7 @@ import { TransactionDetailComponent } from './components/main/transactions/trans
   providers: [
     GlobalsService,
     UsersService,
-    BankAccountsService
+    AccountsService
   ],
   bootstrap: [
     AppComponent

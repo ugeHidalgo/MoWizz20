@@ -5,7 +5,7 @@ export class ImportTransaction {
     transactionType: number;
     conceptName: string;
     costCentreName: string;
-    bankAccountName: string;
+    accountName: string;
     comments: string;
     date: Date;
     company: string;

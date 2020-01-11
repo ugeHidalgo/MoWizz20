@@ -1,6 +1,6 @@
 import { Concept } from './concept';
 import { CostCentre } from './costCentre';
-import { BankAccount } from './bankAccount';
+import { Account } from './account';
 
 export class Transaction {
     _id: string;
@@ -9,7 +9,7 @@ export class Transaction {
     transactionType: number;
     concept: Concept;
     costCentre: CostCentre;
-    account: BankAccount;
+    account: Account;
     comments: string;
     date: Date;
     company: string;

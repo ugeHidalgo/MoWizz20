@@ -43,7 +43,7 @@ export class ImportTransactionsHelper {
       importTransaction.transactionType = rowData[transactionTypeIndex];
       importTransaction.conceptName = rowData[conceptIndex];
       importTransaction.costCentreName = rowData[costCentreIndex];
-      importTransaction.bankAccountName = rowData[bankAccountIndex];
+      importTransaction.accountName = rowData[bankAccountIndex];
       importTransaction.company = rowData[companyIndex];
       importTransaction.comments = rowData[commentsIndex];
       importTransaction.date = me.excelDateToJSDate(rowData[dateIndex]);

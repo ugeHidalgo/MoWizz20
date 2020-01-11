@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
-import { ImportBankAccountsHelper } from './helpers/import-bankAccounts.helper';
-import { BankAccountsService } from 'src/app/services/bankAccounts/bank-accounts.service';
+import { ImportAccountsHelper } from './helpers/import-accounts.helper';
+import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { ToastrService } from 'ngx-toastr';
 import { ImportCompaniesHelper } from './helpers/import-companies.helper';
 import { CompaniesService } from 'src/app/services/companies/companies.service';
@@ -28,7 +28,7 @@ export class ImportDataComponent {
 
   data: AOA;
   selectedEntity : string;
-  importBankAccountsHelper: ImportBankAccountsHelper;
+  importAccountsHelper: ImportAccountsHelper;
   importCompaniesHelper: ImportCompaniesHelper;
   importConceptsHelper: ImportConceptsHelper;
   importTransactionsHelper: ImportTransactionsHelper;
@@ -36,8 +36,8 @@ export class ImportDataComponent {
 	wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName: string = 'SheetJS.xlsx';
   dataEntities: DataEntity[] = [
-    {value: 'banksAccount', viewValue: 'Cuentas bancarias'},
-    {value: 'concept', viewValue: 'Conceptos'},
+    {value: 'accounts', viewValue: 'Cuentas de cargo'},
+    {value: 'concepts', viewValue: 'Conceptos'},
     {value: 'costCenters', viewValue: 'Centros de gasto'},
     {value: 'transactions', viewValue: 'Movimientos'},
     {value: 'companies', viewValue: 'Definiciones de libros contables'}
@@ -45,7 +45,7 @@ export class ImportDataComponent {
 
   constructor(
     private toastr: ToastrService,
-    private bankAccountsService: BankAccountsService,
+    private accountsService: AccountsService,
     private companiesService: CompaniesService,
     private conceptsService: ConceptsService,
     private costCentresService: CostCentresService,
@@ -54,7 +54,7 @@ export class ImportDataComponent {
   ) {
     var me = this;
 
-    me.importBankAccountsHelper = new ImportBankAccountsHelper(bankAccountsService);
+    me.importAccountsHelper = new ImportAccountsHelper(accountsService);
     me.importCompaniesHelper = new ImportCompaniesHelper(companiesService);
     me.importConceptsHelper = new ImportConceptsHelper(conceptsService);
     me.importCostCentresHelper = new ImportCostCentresHelper(costCentresService);
@@ -85,11 +85,11 @@ export class ImportDataComponent {
     me.globals.maskScreen();
     if (!me.selectedEntity) return;
     switch (me.selectedEntity) {
-      case "banksAccount":
-          me.importBankAccountsHelper.import(me.data)
-            .subscribe(savedBankAccounts => {
+      case "accounts":
+          me.importAccountsHelper.import(me.data)
+            .subscribe(savedAccounts => {
               me.globals.unMaskScreen();
-              me.toastr.success(`A total of ${savedBankAccounts.length} bank accounts were successfully created.`);
+              me.toastr.success(`A total of ${savedAccounts.length} accounts were successfully created.`);
             },
             error => {
               me.globals.unMaskScreen();
@@ -97,7 +97,7 @@ export class ImportDataComponent {
             });
         break;
 
-      case "concept":
+      case "concepts":
         me.importConceptsHelper.import(me.data)
         .subscribe(savedConcepts => {
           me.globals.unMaskScreen();
