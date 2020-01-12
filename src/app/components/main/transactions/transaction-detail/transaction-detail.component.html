@@ -21,7 +21,7 @@
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Tipo:</mat-label>
-        <input  matInput  placeholder="Tipo:" name="transactionType" [(ngModel)]="transaction.transactionType" required>
+        <input  matInput  placeholder="Tipo:" name="transactionType" [ngModel]="transaction.transactionType | transactionTypePipe" required>
       </mat-form-field>
       <mat-form-field class="full-width">
         <mat-label>Cuenta:</mat-label>

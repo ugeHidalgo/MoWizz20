@@ -28,7 +28,7 @@
 
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef mat-sort-header><h3>Tipo</h3></th>
-        <td mat-cell *matCellDef="let transaction">{{transaction.transactionType | transactionType}}</td>
+        <td mat-cell *matCellDef="let transaction">{{transaction.transactionType | transactionTypePipe}}</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
