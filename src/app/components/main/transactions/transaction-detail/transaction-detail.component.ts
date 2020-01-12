@@ -13,6 +13,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
 import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { Observable, forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -43,25 +44,31 @@ export class TransactionDetailComponent {
     private transactionsService: TransactionsService,
     private costCentreService: CostCentresService,
     private accountService: AccountsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     const me = this;
-
-    me.company = me.globals.getCompany();
-    me.createForm();
   }
 
   ngOnInit() {
     const me = this,
           id = me.route.snapshot.paramMap.get('id');
 
+    me.globals.maskScreen();
+    me.createForm();
     me.setTitle(id);
+    me.company = me.globals.getCompany();
     me.loadInitialData(id).subscribe(([accounts, costCentres, transaction]) => {
       me.accounts = accounts;
       me.costCentres = costCentres;
       if (transaction) {
         me.transaction = transaction;
       }
+      me.globals.unMaskScreen();
+    },
+    error => {
+      me.globals.unMaskScreen();
+      me.toastr.error(error.message);
     });
 
   }
