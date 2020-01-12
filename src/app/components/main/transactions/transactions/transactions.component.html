@@ -41,6 +41,11 @@
         <td mat-cell *matCellDef="let transaction">{{transaction.account ? transaction.account.name : ''}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="costcentre">
+        <th mat-header-cell  *matHeaderCellDef mat-sort-header><h3>Centro de gasto</h3></th>
+        <td mat-cell *matCellDef="let transaction">{{transaction.costCentre ? transaction.costCentre.name : ''}}</td>
+      </ng-container>
+
       <ng-container matColumnDef="concept">
         <th mat-header-cell  *matHeaderCellDef mat-sort-header><h3>Concepto</h3></th>
         <td mat-cell *matCellDef="let transaction">{{transaction.concept ? transaction.concept.name : ''}}</td>

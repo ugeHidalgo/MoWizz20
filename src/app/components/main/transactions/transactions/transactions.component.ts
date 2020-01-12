@@ -31,7 +31,7 @@ export class TransactionsComponent {
     private router: Router
   ) {
     const me = this;
-    me.displayedColumns = ['date', 'type', 'amount', 'account', 'concept', 'comments'];
+    me.displayedColumns = ['date', 'type', 'amount', 'account', 'costcentre', 'concept', 'comments'];
     me.usedCompany = globals.getCompany();
     me.getTransactionsForCompany(me.usedCompany);
   }
