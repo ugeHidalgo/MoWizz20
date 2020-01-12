@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent {
+
   selectedRowId: string = '-1';
   transactions: any[];
   transactionTypes: TransactionType[] = TransactionTypes;

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-//import { slideInDownAnimation } from '../../../../globals/animations';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { TransactionsService } from 'src/app/services/transactions/transactions.service';
 import { Transaction } from 'src/app/models/transaction';
@@ -19,14 +18,9 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-transaction-detail',
   templateUrl: './transaction-detail.component.html',
-  styleUrls: ['./transaction-detail.component.scss'],
-  //animations: [ slideInDownAnimation ]
+  styleUrls: ['./transaction-detail.component.scss']
 })
 export class TransactionDetailComponent {
-
-  /* @HostBinding('@routeAnimation') routeAnimation = true;
-  @HostBinding('style.display') display = 'block';
-  @HostBinding('style.position') position = 'relative'; */
 
   title: string;
   company: string;

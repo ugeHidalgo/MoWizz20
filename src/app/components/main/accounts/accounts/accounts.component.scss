@@ -1,3 +1,64 @@
 .mat-card {
   margin: 5px;
 }
+
+//Tables styles
+table {
+  width: 100%;
+}
+
+.mat-header-row {
+  font: bold;
+  height: 25px;
+}
+
+.mat-header-cell {
+  padding: 5px;
+}
+
+.mat-row {
+  height: 20px;
+}
+
+.mat-cell {
+  padding: 5px;
+}
+
+.mat-column {
+  margin-right: 10px;
+}
+
+.mat-column-name,
+.mat-column-description {
+  text-align: left;
+}
+
+.mat-column-amount{
+  text-align: right;
+}
+
+.card-title {
+  border-radius: 4px;
+  border: none;
+  background-color: #95d420;
+  color: black;
+  height: 16px;
+  width: auto;
+  min-width: 30%;
+  position: relative;
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.my-header-bar > * {
+  margin-right: 10px;
+}
+//Tables styles
