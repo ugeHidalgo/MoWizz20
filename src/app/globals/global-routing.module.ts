@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AccountsComponent } from '../components/main/accounts/accounts/accounts.component';
 import { PageNotFoundComponent } from '../components/main/notFound/not-found.component';
 import { ConceptsComponent } from '../components/main/concepts/concepts/concepts.component';
+import { CostCentresComponent } from '../components/main/costCentres/cost-centres/cost-centres.component';
 import { MainScreenComponent } from '../components/main/mainScreen/main-screen.component';
 import { LoginComponent } from '../login/login/login.component';
 import { RegisterComponent } from '../login/register/register.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'mainscreen', component: MainScreenComponent },
   { path: 'accounts', component: AccountsComponent },
+  { path: 'cost-centres',  component: CostCentresComponent},
   { path: 'concepts', component: ConceptsComponent },
   { path: 'transactiontypes', component: TransactionTypesComponent },
   { path: 'transactions', component: TransactionsComponent },

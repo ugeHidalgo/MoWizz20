@@ -5,6 +5,7 @@
        <div *ngIf="globals.userNameLogged">
         <button mat-button [matMenuTriggerFor]="setupmenu">Configurar</button>
         <mat-menu #setupmenu="matMenu">
+          <button mat-menu-item routerLink="/cost-centres">Centros de gasto</button>
           <button mat-menu-item routerLink="/accounts">Cuentas</button>
           <button mat-menu-item routerLink="/concepts">Conceptos</button>
           <mat-divider></mat-divider>

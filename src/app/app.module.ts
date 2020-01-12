@@ -27,6 +27,7 @@ import { TransactionsComponent } from './components/main/transactions/transactio
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
 import { TransactionTypePipe } from './pipes/TransactionTypePipe';
 import { TransactionDetailComponent } from './components/main/transactions/transaction-detail/transaction-detail.component';
+import { CostCentresComponent } from './components/main/costCentres/cost-centres/cost-centres.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TransactionDetailComponent } from './components/main/transactions/trans
     TransactionsComponent,
     TransactionTypesComponent,
     TransactionTypePipe,
-    TransactionDetailComponent
+    TransactionDetailComponent,
+    CostCentresComponent
   ],
   imports: [
     GlobalRoutingModule,
