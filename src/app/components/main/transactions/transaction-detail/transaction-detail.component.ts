@@ -55,31 +55,45 @@ export class TransactionDetailComponent {
     const me = this,
           id = me.route.snapshot.paramMap.get('id');
 
-    //me.getActiveCostCentres();
-    //me.getActiveAccounts();
     me.setTitle(id);
-    if (id === '-1') {
-      me.transaction = new Transaction;
-      me.transaction.date = new Date;
-      me.transaction.concept = new Concept;
-      me.transaction.account = new Account;
-      me.transaction.costCentre = new CostCentre;
-      me.transaction.transactionType = 2;
-      me.transaction.company = me.company;
-      me.transaction.amount = 0;
-    } else {
-      me.getTransactionById(id);
-    }
+    me.loadInitialData(id).subscribe(([accounts, costCentres, transaction]) => {
+      me.accounts = accounts;
+      me.costCentres = costCentres;
+      if (transaction) {
+        me.transaction = transaction;
+      }
+    });
+
   }
 
-/*   intiScreen(): Observable<any[]> {
-    const me = this,
-          getCostCentres = me.getActiveCostCentres;
+  loadInitialData(id): Observable<any> {
+    const me = this;
+    let transaction,
+        accounts = me.accountService.getActiveAccounts(me.company),
+        costCentres = me.costCentreService.getActiveCostCentres(me.company);
 
-    return forkJoin(
-      getCostCentres
-    );
-  } */
+    if (id === '-1') {
+      me.transaction = me.createNewTransaction();
+      return forkJoin([accounts, costCentres]);
+    }
+
+    transaction = me.transactionsService.getTransactionById(me.company, id)
+    return forkJoin([accounts, costCentres, transaction]);
+  }
+
+  createNewTransaction(): Transaction {
+    let transaction = new Transaction;
+
+    transaction.date = new Date;
+    transaction.concept = new Concept;
+    transaction.account = new Account;
+    transaction.costCentre = new CostCentre;
+    transaction.transactionType = 2;
+    transaction.company = this.company;
+    transaction.amount = 0;
+
+    return transaction;
+  }
 
   onClickGoBackButton() {
     this.location.back();
@@ -93,15 +107,15 @@ export class TransactionDetailComponent {
     this.location.back();
   }
 
-  getTransactionById(id: string): void {
+/*   getTransactionById(id: string): void {
     const me = this;
 
     me.transactionsService.getTransactionById(me.company, id)
       .subscribe( transaction => {
           me.transaction = transaction;
-          me.fillEmptyValues();
+          //me.fillEmptyValues();
       });
-  }
+  } */
 
   setTitle(id: string): void {
     const me = this;
@@ -113,32 +127,13 @@ export class TransactionDetailComponent {
     }
   }
 
-  fillEmptyValues(): void {
+/*   fillEmptyValues(): void {
     const me = this;
 
     if (!me.transaction.costCentre) {
       me.transaction.costCentre = new CostCentre();
     }
-  }
-
-/*   getActiveCostCentres(): void {
-    const me = this;
-
-    me.costCentreService.getActiveCostCentres(me.company)
-      .subscribe( costCentres => {
-          me.costCentres = costCentres;
-      });
   } */
-
-  getActiveAccounts(): void {
-    const me = this,
-          username = me.globals.userNameLogged;
-
-    /* me.accountService.getActiveAccounts(username)
-      .subscribe( accounts => {
-          me.accounts = accounts;
-      }); */
-  }
 
   // FormModel methods
   createForm() {

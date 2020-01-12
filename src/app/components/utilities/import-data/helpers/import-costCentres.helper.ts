@@ -33,7 +33,7 @@ export class ImportCostCentresHelper {
       costCentre.name = rowData[nameIndex];
       costCentre.company = rowData[companyIndex];
       costCentre.description = rowData[descriptionIndex];
-      costCentre.active = rowData[activeIndex] === 'true' ? true : false;
+      costCentre.active = rowData[activeIndex].trim() === 'true' ? true : false;
       costCentre.updated = new Date();
       costCentre.created = new Date();
 

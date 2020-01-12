@@ -52,6 +52,19 @@ export class AccountsService {
   }
 
   /**.*/
+  getActiveAccounts(company: string): Observable<Account[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          activeAccountsForCompanyUrl = `${me.accountsUrl}/${company}/true`;
+
+    return me.http.get<Account[]>(activeAccountsForCompanyUrl, httpOptions)
+              .pipe(
+                tap(any => console.log(`Active accounts for company ${company} fetched successfully.`)),
+                catchError(me.operationHelper.handleError('getActiveAccounts', []))
+              );
+  }
+
+  /**.*/
   createAccounts(accounts: Account[]): Observable<Account[]> {
     const me = this,
           httpOptions = me.operationHelper.createHttpOptionsWithToken();

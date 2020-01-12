@@ -10,8 +10,8 @@ export class GlobalsService {
   companyInUse: string;
   localStorageStore = 'currentUser';
 
-  server = 'https://apimowizz2ehh.azurewebsites.net/';  //To be used when API is in production
-  //server = 'https://192.168.1.105:45455/';  //To be used when API is in development mode and in local network server.
+  //server = 'https://apimowizz2ehh.azurewebsites.net/';  //To be used when API is in production
+  server = 'https://192.168.1.105:45455/';  //To be used when API is in development mode and in local network server.
   //server = 'https://localhost:5001/';  // To be used when API is in development mode and without connection to any network
 
   constructor() {

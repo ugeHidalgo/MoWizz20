@@ -30,7 +30,7 @@ export class ImportCompaniesHelper {
       company = new Company;
       company.name = rowData[nameIndex];
       company.description = rowData[descriptionIndex];
-      company.active = rowData[activeIndex] === 'true' ? true : false;
+      company.active = rowData[activeIndex].trim() === 'true' ? true : false;
       company.updated = new Date();
       company.created = new Date();
 

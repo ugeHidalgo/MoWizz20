@@ -39,7 +39,7 @@ export class ImportAccountsHelper {
       account.username = rowData[userNameIndex];
       account.name = rowData[nameIndex];
       account.description = rowData[descriptionIndex];
-      account.active = rowData[activeIndex] === 'true' ? true : false;
+      account.active = rowData[activeIndex].trim() === 'true' ? true : false;
       account.iban = rowData[ibanIndex];
       account.comments = rowData[commentsIndex];
       account.updated = new Date();

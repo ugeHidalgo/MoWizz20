@@ -36,7 +36,7 @@ export class ImportConceptsHelper {
       concept.transactionType = rowData[typeIndex];
       concept.company = rowData[companyIndex];
       concept.description = rowData[descriptionIndex];
-      concept.active = rowData[activeIndex] === 'true' ? true : false;
+      concept.active = rowData[activeIndex].trim() === 'true' ? true : false;
       concept.updated = new Date();
       concept.created = new Date();
 
