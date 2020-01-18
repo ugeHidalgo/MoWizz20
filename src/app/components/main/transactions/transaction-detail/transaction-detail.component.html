@@ -14,34 +14,49 @@
     </mat-toolbar>
   </div>
   <div class="card-body">
-    <form>
+    <form [formGroup]="validatingForm">
       <mat-form-field class="full-width">
         <mat-label>Fecha:</mat-label>
-        <input  matInput  placeholder="Fecha"  name="date"  [ngModel]="transaction.date | date:'dd/MM/yyyy'" required>
+        <input  matInput  placeholder="Fecha"  formControlName="date"  [ngModel]="transaction.date | date:'dd/MM/yyyy'" required>
       </mat-form-field>
+
+      <!-- <mat-form-field class="full-width">
+        <mat-label>Tipo de movimiento:</mat-label>
+        <input  matInput  placeholder="Tipo de movimiento:" formControlName="transactionType" [ngModel]="transaction.transactionType | transactionTypePipe" required>
+      </mat-form-field> -->
+
       <mat-form-field class="full-width">
-        <mat-label>Tipo:</mat-label>
-        <input  matInput  placeholder="Tipo:" name="transactionType" [ngModel]="transaction.transactionType | transactionTypePipe" required>
+        <mat-label>Tipo de movimiento:</mat-label>
+        <mat-select placeholder="Tipo movimiento: " formControlName="transactionType" (selectionChange)="onTransactionTypeSelected()">
+            <mat-option *ngFor="let transactionType of transactionTypes" [(value)]=transactionType.value>
+                {{transactionType.name}}
+            </mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field class="full-width">
+
+      <!-- <mat-form-field class="full-width">
         <mat-label>Cuenta:</mat-label>
         <input  matInput  placeholder="Cuenta:" name="account" [(ngModel)]="transaction.account.name" required>
       </mat-form-field>
+
        <mat-form-field class="full-width">
         <mat-label>Centro de gasto:</mat-label>
         <input  matInput  placeholder="Centro de gasto:" name="costCentre" [(ngModel)]="transaction.costCentre.name" required>
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <mat-label>Concepto:</mat-label>
         <input  matInput  placeholder="Concepto:"  name="concept" [(ngModel)]="transaction.concept.name" required>
       </mat-form-field>
+ -->
       <mat-form-field class="full-width">
         <mat-label>Cantidad:</mat-label>
-        <input  matInput  placeholder="Cantidad:"  name="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required>
+        <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required>
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <mat-label>Comentarios:</mat-label>
-        <input  matInput  placeholder="Comentarios:" name="comments" [(ngModel)]="transaction.comments">
+        <input  matInput  placeholder="Comentarios:" formControlName="comments" [(ngModel)]="transaction.comments">
       </mat-form-field>
     </form>
   </div>

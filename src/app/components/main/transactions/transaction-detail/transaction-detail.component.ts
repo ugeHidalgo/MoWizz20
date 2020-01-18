@@ -8,7 +8,7 @@ import { CostCentre } from 'src/app/models/costCentre';
 import { Concept } from 'src/app/models/concept';
 import { Account } from 'src/app/models/account';
 import { TransactionTypes, TransactionType } from 'src/app/models/transactionType';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
 import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { Observable, forkJoin } from 'rxjs';
@@ -42,12 +42,13 @@ export class TransactionDetailComponent {
     private toastr: ToastrService
   ) {
     const me = this;
+    me.globals.maskScreen();
+    me.createForm();
   }
 
   ngOnInit() {
     const me = this;
 
-    me.globals.maskScreen();
     me.transactionId = me.route.snapshot.paramMap.get('id');
     me.createForm();
     me.setScreenTitle();
@@ -58,13 +59,17 @@ export class TransactionDetailComponent {
       if (transaction) {
         me.transaction = transaction;
       }
+      me.rebuildForm();
       me.globals.unMaskScreen();
     },
     error => {
       me.globals.unMaskScreen();
       me.toastr.error(error.message);
     });
+  }
 
+  ngOnChanges() {
+    this.rebuildForm();
   }
 
   loadInitialData(): Observable<any> {
@@ -105,7 +110,14 @@ export class TransactionDetailComponent {
   }
 
   onClickUnDoButton() {
-    this.location.back();
+    this.rebuildForm();
+  }
+
+  onTransactionTypeSelected(): void {
+    const me = this,
+          formModel = me.validatingForm.value;
+
+    //me.getActiveConceptsByType(formModel.transactionType);
   }
 
 /*   getTransactionById(id: string): void {
@@ -140,15 +152,44 @@ export class TransactionDetailComponent {
   createForm() {
     const me = this;
 
-    me.validatingForm = me.fb.group({
-      date: ['', Validators.required ],
-      transactionType: ['', Validators.required ],
-      concept: ['', Validators.required ],
-      costCentre: ['', Validators.required ],
-      account: ['', Validators.required ],
-      comments: '',
-      amount: ['', Validators.required ]
+    me.validatingForm = new FormGroup({
+      date: new FormControl('',[Validators.required]),
+      transactionType: new FormControl('',[Validators.required]),
+      concept: new FormControl('',[Validators.required]),
+      costCentre: new FormControl('',[Validators.required]),
+      account: new FormControl('',[Validators.required]),
+      comments: new FormControl('',[Validators.required]),
+      amount: new FormControl('',[Validators.required]),
     });
   }
 
+  rebuildForm() {
+    const me = this;
+
+    me.validatingForm.reset({
+      date: me.transaction.date,
+      transactionType: me.transaction.transactionType,
+      /* concept: me.transaction.concept._id,
+      costCentre: me.transaction.costCentre._id,
+      account: me.transaction.account._id, */
+      comments: me.transaction.comments,
+      amount: me.transaction.amount
+    });
+  }
+
+  getFormData(): Transaction {
+    const me = this,
+          formModel = me.validatingForm.value,
+          newTransaction: Transaction = me.transaction;
+
+    newTransaction.date = formModel.date;
+    newTransaction.transactionType = formModel.transactionType;
+    //newTransaction.concept = me.getConceptById(formModel.concept);
+    //newTransaction.costCentre = me.getCostCentreById(formModel.costCentre);
+    //newTransaction.account = me.getAccountById(formModel.account);
+    newTransaction.comments = formModel.comments;
+    newTransaction.amount = formModel.amount;
+
+    return newTransaction;
+  }
 }
