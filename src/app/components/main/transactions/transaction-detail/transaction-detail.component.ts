@@ -50,7 +50,6 @@ export class TransactionDetailComponent {
     const me = this;
 
     me.transactionId = me.route.snapshot.paramMap.get('id');
-    me.createForm();
     me.setScreenTitle();
     me.company = me.globals.getCompany();
     me.loadInitialData().subscribe(([accounts, costCentres, transaction]) => {
@@ -169,9 +168,9 @@ export class TransactionDetailComponent {
     me.validatingForm.reset({
       date: me.transaction.date,
       transactionType: me.transaction.transactionType,
+      account: me.transaction.account.name,
       /* concept: me.transaction.concept._id,
-      costCentre: me.transaction.costCentre._id,
-      account: me.transaction.account._id, */
+      costCentre: me.transaction.costCentre._id, */
       comments: me.transaction.comments,
       amount: me.transaction.amount
     });
@@ -184,12 +183,16 @@ export class TransactionDetailComponent {
 
     newTransaction.date = formModel.date;
     newTransaction.transactionType = formModel.transactionType;
+    newTransaction.account = me.getAccountById(formModel.account);
     //newTransaction.concept = me.getConceptById(formModel.concept);
     //newTransaction.costCentre = me.getCostCentreById(formModel.costCentre);
-    //newTransaction.account = me.getAccountById(formModel.account);
     newTransaction.comments = formModel.comments;
     newTransaction.amount = formModel.amount;
 
     return newTransaction;
+  }
+
+  getAccountById(id): Account {
+    return this.accounts.find( function(x) { return x._id === id; });
   }
 }

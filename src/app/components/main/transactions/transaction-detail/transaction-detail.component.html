@@ -32,12 +32,16 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- <mat-form-field class="full-width">
-        <mat-label>Cuenta:</mat-label>
-        <input  matInput  placeholder="Cuenta:" name="account" [(ngModel)]="transaction.account.name" required>
+      <mat-form-field class="full-width">
+        <mat-label>Cuenta de cargo:</mat-label>
+        <mat-select placeholder="Cuenta: " formControlName="account">
+            <mat-option *ngFor="let account of accounts" [(value)]=account.name>
+                {{account.name}}: {{account.description}}
+            </mat-option>
+        </mat-select>
       </mat-form-field>
 
-       <mat-form-field class="full-width">
+<!--       <mat-form-field class="full-width">
         <mat-label>Centro de gasto:</mat-label>
         <input  matInput  placeholder="Centro de gasto:" name="costCentre" [(ngModel)]="transaction.costCentre.name" required>
       </mat-form-field>
