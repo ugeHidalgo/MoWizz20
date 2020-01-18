@@ -8,7 +8,7 @@ import { CostCentre } from 'src/app/models/costCentre';
 import { Concept } from 'src/app/models/concept';
 import { Account } from 'src/app/models/account';
 import { TransactionTypes, TransactionType } from 'src/app/models/transactionType';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
 import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { Observable, forkJoin } from 'rxjs';
@@ -21,7 +21,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./transaction-detail.component.scss']
 })
 export class TransactionDetailComponent {
-
+  transactionId: string;
   title: string;
   company: string;
   transaction: Transaction;
@@ -45,14 +45,14 @@ export class TransactionDetailComponent {
   }
 
   ngOnInit() {
-    const me = this,
-          id = me.route.snapshot.paramMap.get('id');
+    const me = this;
 
     me.globals.maskScreen();
+    me.transactionId = me.route.snapshot.paramMap.get('id');
     me.createForm();
-    me.setTitle(id);
+    me.setScreenTitle();
     me.company = me.globals.getCompany();
-    me.loadInitialData(id).subscribe(([accounts, costCentres, transaction]) => {
+    me.loadInitialData().subscribe(([accounts, costCentres, transaction]) => {
       me.accounts = accounts;
       me.costCentres = costCentres;
       if (transaction) {
@@ -67,18 +67,18 @@ export class TransactionDetailComponent {
 
   }
 
-  loadInitialData(id): Observable<any> {
+  loadInitialData(): Observable<any> {
     const me = this;
     let transaction,
         accounts = me.accountService.getActiveAccounts(me.company),
         costCentres = me.costCentreService.getActiveCostCentres(me.company);
 
-    if (id === '-1') {
+    if (me.transactionId === '-1') {
       me.transaction = me.createNewTransaction();
       return forkJoin([accounts, costCentres]);
     }
 
-    transaction = me.transactionsService.getTransactionById(me.company, id)
+    transaction = me.transactionsService.getTransactionById(me.company, me.transactionId)
     return forkJoin([accounts, costCentres, transaction]);
   }
 
@@ -118,10 +118,10 @@ export class TransactionDetailComponent {
       });
   } */
 
-  setTitle(id: string): void {
+  setScreenTitle(): void {
     const me = this;
 
-    if (id === '-1'){
+    if (me.transactionId === '-1'){
       me.title ='Nuevo movimiento';
     } else {
       me.title ='Editar movimiento';
@@ -141,13 +141,13 @@ export class TransactionDetailComponent {
     const me = this;
 
     me.validatingForm = me.fb.group({
-      date: '',
-      transactionType: '',
-      concept: '',
-      costCentre: '',
-      account: '',
+      date: ['', Validators.required ],
+      transactionType: ['', Validators.required ],
+      concept: ['', Validators.required ],
+      costCentre: ['', Validators.required ],
+      account: ['', Validators.required ],
       comments: '',
-      amount: ''
+      amount: ['', Validators.required ]
     });
   }
 

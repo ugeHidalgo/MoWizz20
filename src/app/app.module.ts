@@ -4,12 +4,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+//Locale
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import loacaleEs from '@angular/common/locales/es'
+registerLocaleData(loacaleEs);
+
 // External libraries
 import { ToastrModule } from 'ngx-toastr'; // Toaster library used to messaging
+import * as toastrCustomOptions from './messages/toastrCustomOptions';
 
 import { AppComponent } from './app.component';
 import { GlobalRoutingModule } from './globals/global-routing.module';
 import { MyMaterialModule } from './globals/material.module';
+
+import { TransactionTypePipe } from './pipes/TransactionTypePipe';
+import { EuroCurrencyPipe } from './pipes/EuroCurrencyPipe';
 
 import { UsersService } from './services/users/users.service';
 import { GlobalsService } from './globals/globals.service';
@@ -21,11 +31,9 @@ import { AccountsComponent } from './components/main/accounts/accounts/accounts.
 import { MainScreenComponent } from './components/main/mainScreen/main-screen.component';
 import { RegisterComponent } from './login/register/register.component';
 import { LoginComponent } from './login/login/login.component';
-import * as toastrCustomOptions from './messages/toastrCustomOptions';
 import { ImportDataComponent } from './components/utilities/import-data/import-data.component';
 import { TransactionsComponent } from './components/main/transactions/transactions/transactions.component';
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
-import { TransactionTypePipe } from './pipes/TransactionTypePipe';
 import { TransactionDetailComponent } from './components/main/transactions/transaction-detail/transaction-detail.component';
 import { CostCentresComponent } from './components/main/costCentres/cost-centres/cost-centres.component';
 
@@ -42,6 +50,7 @@ import { CostCentresComponent } from './components/main/costCentres/cost-centres
     TransactionsComponent,
     TransactionTypesComponent,
     TransactionTypePipe,
+    EuroCurrencyPipe,
     TransactionDetailComponent,
     CostCentresComponent
   ],
@@ -58,7 +67,8 @@ import { CostCentresComponent } from './components/main/costCentres/cost-centres
   providers: [
     GlobalsService,
     UsersService,
-    AccountsService
+    AccountsService,
+    { provide: LOCALE_ID, useValue: 'es'}
   ],
   bootstrap: [
     AppComponent
