@@ -109,7 +109,7 @@ export class TransactionDetailComponent {
     this.location.back();
   }
 
-  onClickUnDoButton() {
+  onClickUndoButton() {
     this.rebuildForm();
   }
 

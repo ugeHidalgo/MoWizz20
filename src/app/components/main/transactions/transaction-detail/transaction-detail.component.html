@@ -15,15 +15,13 @@
   </div>
   <div class="card-body">
     <form [formGroup]="validatingForm">
+
       <mat-form-field class="full-width">
         <mat-label>Fecha:</mat-label>
-        <input  matInput  placeholder="Fecha"  formControlName="date"  [ngModel]="transaction.date | date:'dd/MM/yyyy'" required>
+        <input matInput [matDatepicker]="picker" placeholder="Fecha:" formControlName="date" [value]=transaction.date>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-
-      <!-- <mat-form-field class="full-width">
-        <mat-label>Tipo de movimiento:</mat-label>
-        <input  matInput  placeholder="Tipo de movimiento:" formControlName="transactionType" [ngModel]="transaction.transactionType | transactionTypePipe" required>
-      </mat-form-field> -->
 
       <mat-form-field class="full-width">
         <mat-label>Tipo de movimiento:</mat-label>
