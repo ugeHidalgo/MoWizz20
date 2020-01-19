@@ -6,6 +6,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { OperationsHelper } from '../operations.helper';
 import { Router } from '@angular/router';
 import { Concept } from 'src/app/models/concept';
+import { TransactionType } from 'src/app/models/transactionType';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,19 @@ export class ConceptsService {
               .pipe(
                 tap(any => console.log('Concepts fetched successfully.')),
                 catchError(me.operationHelper.handleError<Concept[]>('getConcepts', []))
+              );
+  }
+
+  /**.*/
+  getActiveConceptsByType(company: string, transactionType: number): Observable<Concept[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          activeConceptsByTypeCompanyAndTypeUrl = `${me.conceptsUrl}/${company}/${transactionType}/true`;
+
+    return me.http.get<Concept[]>(activeConceptsByTypeCompanyAndTypeUrl, httpOptions)
+              .pipe(
+                tap(any => console.log(`Concepts of type ${transactionType}, fetched successfully.`)),
+                catchError(me.operationHelper.handleError<Concept[]>('getActiveConceptsByType', []))
               );
   }
 

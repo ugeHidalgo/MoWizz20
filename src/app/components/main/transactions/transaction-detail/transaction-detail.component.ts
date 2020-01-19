@@ -8,11 +8,12 @@ import { CostCentre } from 'src/app/models/costCentre';
 import { Concept } from 'src/app/models/concept';
 import { Account } from 'src/app/models/account';
 import { TransactionTypes, TransactionType } from 'src/app/models/transactionType';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
 import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { Observable, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { ConceptsService } from 'src/app/services/concepts/concepts.service';
 
 
 @Component({
@@ -38,7 +39,7 @@ export class TransactionDetailComponent {
     private transactionsService: TransactionsService,
     private costCentreService: CostCentresService,
     private accountService: AccountsService,
-    private fb: FormBuilder,
+    private conceptsService: ConceptsService,
     private toastr: ToastrService
   ) {
     const me = this;
@@ -86,6 +87,16 @@ export class TransactionDetailComponent {
     return forkJoin([accounts, costCentres, transaction]);
   }
 
+  setScreenTitle(): void {
+    const me = this;
+
+    if (me.transactionId === '-1'){
+      me.title ='Nuevo movimiento';
+    } else {
+      me.title ='Editar movimiento';
+    }
+  }
+
   createNewTransaction(): Transaction {
     let transaction = new Transaction;
 
@@ -116,36 +127,10 @@ export class TransactionDetailComponent {
     const me = this,
           formModel = me.validatingForm.value;
 
-    //me.getActiveConceptsByType(formModel.transactionType);
+    me.getActiveConceptsByType(formModel.transactionType);
+    me.transaction.concept = new Concept;
+    me.validatingForm.patchValue({concept: me.transaction.concept});
   }
-
-/*   getTransactionById(id: string): void {
-    const me = this;
-
-    me.transactionsService.getTransactionById(me.company, id)
-      .subscribe( transaction => {
-          me.transaction = transaction;
-          //me.fillEmptyValues();
-      });
-  } */
-
-  setScreenTitle(): void {
-    const me = this;
-
-    if (me.transactionId === '-1'){
-      me.title ='Nuevo movimiento';
-    } else {
-      me.title ='Editar movimiento';
-    }
-  }
-
-/*   fillEmptyValues(): void {
-    const me = this;
-
-    if (!me.transaction.costCentre) {
-      me.transaction.costCentre = new CostCentre();
-    }
-  } */
 
   // FormModel methods
   createForm() {
@@ -165,12 +150,13 @@ export class TransactionDetailComponent {
   rebuildForm() {
     const me = this;
 
+    me.getActiveConceptsByType(me.transaction.transactionType);
     me.validatingForm.reset({
       date: me.transaction.date,
       transactionType: me.transaction.transactionType,
       account: me.transaction.account.name,
-      /* concept: me.transaction.concept._id,
-      costCentre: me.transaction.costCentre._id, */
+      costCentre: me.transaction.costCentre.name,
+      concept: me.transaction.concept.name,
       comments: me.transaction.comments,
       amount: me.transaction.amount
     });
@@ -184,8 +170,8 @@ export class TransactionDetailComponent {
     newTransaction.date = formModel.date;
     newTransaction.transactionType = formModel.transactionType;
     newTransaction.account = me.getAccountById(formModel.account);
-    //newTransaction.concept = me.getConceptById(formModel.concept);
-    //newTransaction.costCentre = me.getCostCentreById(formModel.costCentre);
+    newTransaction.concept = me.getConceptById(formModel.concept);
+    newTransaction.costCentre = me.getCostCentreById(formModel.costCentre);
     newTransaction.comments = formModel.comments;
     newTransaction.amount = formModel.amount;
 
@@ -194,5 +180,24 @@ export class TransactionDetailComponent {
 
   getAccountById(id): Account {
     return this.accounts.find( function(x) { return x._id === id; });
+  }
+
+  getCostCentreById(id): CostCentre {
+    return this.costCentres.find( function(x) { return x._id === id; });
+  }
+
+  getConceptById(id): Concept {
+    return this.concepts.find( function(x) { return x._id === id; });
+  }
+
+  getActiveConceptsByType(transactionType: number): void {
+    const me = this;
+
+    me.globals.maskScreen();
+    me.conceptsService.getActiveConceptsByType(me.company, transactionType)
+    .subscribe( concepts => {
+        me.concepts = concepts;
+        me.globals.unMaskScreen();
+    });
   }
 }

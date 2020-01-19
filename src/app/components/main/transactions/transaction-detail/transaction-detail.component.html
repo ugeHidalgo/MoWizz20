@@ -41,19 +41,27 @@
         </mat-select>
       </mat-form-field>
 
-<!--       <mat-form-field class="full-width">
+      <mat-form-field class="full-width">
         <mat-label>Centro de gasto:</mat-label>
-        <input  matInput  placeholder="Centro de gasto:" name="costCentre" [(ngModel)]="transaction.costCentre.name" required>
+        <mat-select placeholder="Centro de gasto: " formControlName="costCentre">
+            <mat-option *ngFor="let costCentre of costCentres" [(value)]=costCentre.name>
+                {{costCentre.name}}: {{costCentre.description}}
+            </mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <mat-label>Concepto:</mat-label>
-        <input  matInput  placeholder="Concepto:"  name="concept" [(ngModel)]="transaction.concept.name" required>
+        <mat-select placeholder="Concepto: " formControlName="concept">
+            <mat-option *ngFor="let concept of concepts" [(value)]=concept.name>
+                {{concept.name}}: {{concept.description}}
+            </mat-option>
+        </mat-select>
       </mat-form-field>
- -->
+
       <mat-form-field class="full-width">
         <mat-label>Cantidad:</mat-label>
-        <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required>
+        <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required
+                [ngClass]="{'money-income': transaction.amount>=0, 'money-expense': transaction.amount<0}">
       </mat-form-field>
 
       <mat-form-field class="full-width">
