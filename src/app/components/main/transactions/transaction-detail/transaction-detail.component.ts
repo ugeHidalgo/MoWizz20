@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalsService } from 'src/app/globals/globals.service';
@@ -14,6 +14,7 @@ import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { Observable, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ConceptsService } from 'src/app/services/concepts/concepts.service';
+import { EuroCurrencyPipe } from 'src/app/pipes/EuroCurrencyPipe';
 
 
 @Component({
@@ -21,7 +22,8 @@ import { ConceptsService } from 'src/app/services/concepts/concepts.service';
   templateUrl: './transaction-detail.component.html',
   styleUrls: ['./transaction-detail.component.scss']
 })
-export class TransactionDetailComponent {
+
+export class TransactionDetailComponent implements OnInit {
   transactionId: string;
   title: string;
   company: string;
@@ -59,6 +61,7 @@ export class TransactionDetailComponent {
       if (transaction) {
         me.transaction = transaction;
       }
+      me.getActiveConceptsByType(me.transaction.transactionType);
       me.rebuildForm();
       me.globals.unMaskScreen();
     },
@@ -66,10 +69,6 @@ export class TransactionDetailComponent {
       me.globals.unMaskScreen();
       me.toastr.error(error.message);
     });
-  }
-
-  ngOnChanges() {
-    this.rebuildForm();
   }
 
   loadInitialData(): Observable<any> {
@@ -132,6 +131,10 @@ export class TransactionDetailComponent {
     me.validatingForm.patchValue({concept: me.transaction.concept});
   }
 
+  onAmountChanged(): void {
+    this.rebuildEuroCurrencyPipeData();
+  }
+
   // FormModel methods
   createForm() {
     const me = this;
@@ -150,7 +153,6 @@ export class TransactionDetailComponent {
   rebuildForm() {
     const me = this;
 
-    me.getActiveConceptsByType(me.transaction.transactionType);
     me.validatingForm.reset({
       date: me.transaction.date,
       transactionType: me.transaction.transactionType,
@@ -160,6 +162,19 @@ export class TransactionDetailComponent {
       comments: me.transaction.comments,
       amount: me.transaction.amount
     });
+    me.rebuildPipedData();
+  }
+
+  rebuildPipedData() {
+    this.rebuildEuroCurrencyPipeData();
+  }
+
+  rebuildEuroCurrencyPipeData() {
+    const me = this;
+    var actualAmount = me.validatingForm.get('amount').value,
+        formattedAmount = me.euroCurrencyPipe(actualAmount);
+
+    me.validatingForm.patchValue({amount: formattedAmount});
   }
 
   getFormData(): Transaction {
@@ -199,5 +214,11 @@ export class TransactionDetailComponent {
         me.concepts = concepts;
         me.globals.unMaskScreen();
     });
+  }
+
+  euroCurrencyPipe(value) {
+    const pipe = new EuroCurrencyPipe();
+
+    return pipe.transform(value);
   }
 }
