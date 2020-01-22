@@ -70,6 +70,6 @@ export class ImportTransactionsHelper {
     var hours = Math.floor(total_seconds / (60 * 60));
     var minutes = Math.floor(total_seconds / 60) % 60;
 
-    return new Date(date_info.getFullYear(), date_info.getMonth(), date_info.getDate(), hours, minutes, seconds);
+    return new Date(date_info.getFullYear(), date_info.getMonth()+1, date_info.getDate(), hours, minutes, seconds);
  }
 };

@@ -67,4 +67,17 @@ export class TransactionsService {
                 catchError(me.operationHelper.handleError<Transaction[]>('importConcepts', []))
               );
   }
+
+  /**.*/
+  createOrUpdateTransaction(transaction: Transaction): Observable<Transaction> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken();
+
+    return this.http.post<Transaction>(me.transactionsUrl, transaction, httpOptions)
+              .pipe(
+                // tslint:disable-next-line:no-shadowed-variable
+                tap(any => console.log('Transaction successfully saved.')),
+                catchError(me.operationHelper.handleError<Transaction>('createOrUpdateTransaction', transaction))
+              );
+  }
 }

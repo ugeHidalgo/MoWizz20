@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, DecimalPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { TransactionsService } from 'src/app/services/transactions/transactions.service';
@@ -114,8 +114,23 @@ export class TransactionDetailComponent implements OnInit {
     this.location.back();
   }
 
-  onClickSaveButton() {
-    this.location.back();
+  onClickSaveButton(): void {
+    const me = this;
+
+    me.globals.maskScreen();
+    me.transaction = me.getFormData();
+    me.transactionsService.createOrUpdateTransaction(me.transaction)
+      .subscribe( (updatedTransaction) => {
+          if (updatedTransaction) {
+            me.globals.unMaskScreen();
+            me.toastr.success('Movimiento guardado correctamente.');
+          } else {
+            me.globals.unMaskScreen();
+            me.toastr.error('No se puedo salvar el movimiento. Inténtelo de nuevo.');
+          }
+        }
+      );
+    me.rebuildForm();
   }
 
   onClickUndoButton() {
@@ -132,7 +147,7 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   onAmountChanged(): void {
-    this.rebuildEuroCurrencyPipeData();
+    //this.rebuildEuroCurrencyPipeData();
   }
 
   // FormModel methods
@@ -145,7 +160,7 @@ export class TransactionDetailComponent implements OnInit {
       concept: new FormControl('',[Validators.required]),
       costCentre: new FormControl('',[Validators.required]),
       account: new FormControl('',[Validators.required]),
-      comments: new FormControl('',[Validators.required]),
+      comments: new FormControl('',[]),
       amount: new FormControl('',[Validators.required]),
     });
   }
@@ -153,7 +168,7 @@ export class TransactionDetailComponent implements OnInit {
   rebuildForm() {
     const me = this;
 
-    me.validatingForm.reset({
+    me.validatingForm.setValue({
       date: me.transaction.date,
       transactionType: me.transaction.transactionType,
       account: me.transaction.account.name,
@@ -162,10 +177,9 @@ export class TransactionDetailComponent implements OnInit {
       comments: me.transaction.comments,
       amount: me.transaction.amount
     });
-    me.rebuildPipedData();
   }
 
-  rebuildPipedData() {
+/*   rebuildPipedData() {
     this.rebuildEuroCurrencyPipeData();
   }
 
@@ -175,7 +189,7 @@ export class TransactionDetailComponent implements OnInit {
         formattedAmount = me.euroCurrencyPipe(actualAmount);
 
     me.validatingForm.patchValue({amount: formattedAmount});
-  }
+  } */
 
   getFormData(): Transaction {
     const me = this,
@@ -184,25 +198,25 @@ export class TransactionDetailComponent implements OnInit {
 
     newTransaction.date = formModel.date;
     newTransaction.transactionType = formModel.transactionType;
-    newTransaction.account = me.getAccountById(formModel.account);
-    newTransaction.concept = me.getConceptById(formModel.concept);
-    newTransaction.costCentre = me.getCostCentreById(formModel.costCentre);
+    newTransaction.concept = me.getConceptByName(formModel.concept);
+    newTransaction.costCentre = me.getCostCentreByName(formModel.costCentre);
+    newTransaction.account = me.getAccountByName(formModel.account);
     newTransaction.comments = formModel.comments;
-    newTransaction.amount = formModel.amount;
+    newTransaction.amount = me.getAmountFromForm(formModel);
 
     return newTransaction;
   }
 
-  getAccountById(id): Account {
-    return this.accounts.find( function(x) { return x._id === id; });
+  getAccountByName(name): Account {
+    return this.accounts.find( function(x) { return x.name === name; });
   }
 
-  getCostCentreById(id): CostCentre {
-    return this.costCentres.find( function(x) { return x._id === id; });
+  getCostCentreByName(name): CostCentre {
+    return this.costCentres.find( function(x) { return x.name === name; });
   }
 
-  getConceptById(id): Concept {
-    return this.concepts.find( function(x) { return x._id === id; });
+  getConceptByName(name): Concept {
+    return this.concepts.find( function(x) { return x.name === name; });
   }
 
   getActiveConceptsByType(transactionType: number): void {
@@ -216,9 +230,26 @@ export class TransactionDetailComponent implements OnInit {
     });
   }
 
-  euroCurrencyPipe(value) {
+  getAmountFromForm(formModel: any): number {
+    let amount = formModel.amount;
+    if (formModel.transactionType === 2) {//Expense
+      if (amount>=0) {
+        amount = amount * -1;
+      }
+    }
+    return amount;
+  }
+/*   euroCurrencyPipe(value) {
     const pipe = new EuroCurrencyPipe();
 
     return pipe.transform(value);
   }
+
+  decimalFormatter(value) {
+    const me = this,
+          valueWithoutCurrency = value.substring(0, value.indexOf(" ")),
+          decimalPipe = new DecimalPipe(navigator.language);
+
+    return Number(decimalPipe.transform(valueWithoutCurrency));
+  } */
 }

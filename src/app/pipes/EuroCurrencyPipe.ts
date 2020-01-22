@@ -15,7 +15,7 @@ export class EuroCurrencyPipe implements PipeTransform {
         | 'symbol-narrow'
         | string
         | boolean = 'symbol',
-      digitsInfo: string = '3.2-2',
+      digitsInfo: string = '0.2-2',
       locale: string = 'es'
       ): string | null {
     return formatCurrency(value, locale, getCurrencySymbol(currencyCode, 'wide'), currencyCode, digitsInfo);
