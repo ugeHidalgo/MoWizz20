@@ -33,7 +33,8 @@
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell  *matHeaderCellDef mat-sort-header><h3>Importe</h3></th>
-        <td mat-cell *matCellDef="let transaction">{{transaction.amount | euroCurrencyPipe}}</td>
+        <td mat-cell [ngStyle]="{'color': transaction.amount < 0 ? 'red' : 'black'}"
+            *matCellDef="let transaction">{{transaction.amount | euroCurrencyPipe}}</td>
       </ng-container>
 
       <ng-container matColumnDef="account">

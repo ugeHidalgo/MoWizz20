@@ -147,7 +147,15 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   onAmountChanged(): void {
-    //this.rebuildEuroCurrencyPipeData();
+    var me = this,
+        formModel = me.validatingForm.value,
+        newAmount = me.getAmountFromForm(formModel);
+
+    if(newAmount<0){
+      document.getElementById("my-amount-field").style.color="red";
+    } else {
+      document.getElementById("my-amount-field").style.color="black";
+    }
   }
 
   // FormModel methods

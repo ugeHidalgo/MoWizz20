@@ -62,8 +62,7 @@
         <mat-label>Cantidad:</mat-label>
         <!-- <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required -->
         <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount" required type="number"
-                [ngClass]="{'money-income': transaction.amount>=0, 'money-expense': transaction.amount<0}"
-                (change)="onAmountChanged()">
+                [ngStyle]="{'color': transaction.amount < 0 ? 'red' : 'black'}" (change)="onAmountChanged()" id="my-amount-field">
       </mat-form-field>
 
       <mat-form-field class="full-width">
