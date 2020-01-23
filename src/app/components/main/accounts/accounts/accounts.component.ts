@@ -58,19 +58,21 @@ export class AccountsComponent {
   }
 
   onClickAddButton() {
-    const pathToAccountDetail = `/account/-1`;
+    this.toastr.warning('To be implemented.');
+    /* const pathToAccountDetail = `/accountdetail/-1`;
 
-    this.router.navigate([pathToAccountDetail]);
+    this.router.navigate([pathToAccountDetail]); */
   }
 
   onClickEditButton() {
-    const pathToTransactionDetail = `/transactiondetail/` + this.selectedRowId;
+    this.toastr.warning('To be implemented.');
+    /* const pathToAccountDetail = `/accountdetail/` + this.selectedRowId;
 
-    this.router.navigate([pathToTransactionDetail]);
+    this.router.navigate([pathToAccountDetail]); */
   }
 
   onClickRemoveButton() {
-
+    this.toastr.warning('To be implemented.');
   }
 
   selectRow(row) {

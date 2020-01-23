@@ -70,7 +70,7 @@ export class TransactionsComponent {
   }
 
   onClickRemoveButton() {
-
+    this.toastr.warning('To be implemented.');
   }
 
   selectRow(row) {

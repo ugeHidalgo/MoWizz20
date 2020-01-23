@@ -25,12 +25,15 @@ import { UsersService } from './services/users/users.service';
 import { GlobalsService } from './globals/globals.service';
 import { AccountsService } from './services/accounts/accounts.service';
 
+import { MainScreenComponent } from './components/main/mainScreen/main-screen.component';
+
+import { RegisterComponent } from './login/register/register.component';
+import { LoginComponent } from './login/login/login.component';
+import { UserComponent } from './login/user/user.component';
+
 import { PageNotFoundComponent } from './components/main/notFound/not-found.component';
 import { ConceptsComponent } from './components/main/concepts/concepts/concepts.component'
 import { AccountsComponent } from './components/main/accounts/accounts/accounts.component';
-import { MainScreenComponent } from './components/main/mainScreen/main-screen.component';
-import { RegisterComponent } from './login/register/register.component';
-import { LoginComponent } from './login/login/login.component';
 import { ImportDataComponent } from './components/utilities/import-data/import-data.component';
 import { TransactionsComponent } from './components/main/transactions/transactions/transactions.component';
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
@@ -52,7 +55,8 @@ import { CostCentresComponent } from './components/main/costCentres/cost-centres
     TransactionTypePipe,
     EuroCurrencyPipe,
     TransactionDetailComponent,
-    CostCentresComponent
+    CostCentresComponent,
+    UserComponent
   ],
   imports: [
     GlobalRoutingModule,
