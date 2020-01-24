@@ -30,7 +30,7 @@ export class AccountsComponent {
   ) {
     const me = this;
 
-    me.displayedColumns = ['name', 'description', 'amount'];
+    me.displayedColumns = ['name','amount', 'description'];
     me.usedCompany = globals.getCompany();
     me.getAccountsForCompany(me.usedCompany);
   }
