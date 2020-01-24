@@ -77,7 +77,7 @@ export class TransactionsService {
               .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
                 tap(any => console.log('Transaction successfully saved.')),
-                catchError(me.operationHelper.handleError<Transaction>('createOrUpdateTransaction', transaction))
+                catchError(me.operationHelper.handleError<Transaction>('createOrUpdateTransaction', null))
               );
   }
 }

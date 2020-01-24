@@ -23,9 +23,6 @@ export class OperationsHelper {
       if (error.status === 401) {
         me.router.navigate(['/login']);
       }
-      if (error.status === 0) {
-        return throwError(error);
-      }
       return of(result as T);
     };
   }
