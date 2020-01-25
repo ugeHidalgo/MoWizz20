@@ -39,6 +39,7 @@ import { TransactionsComponent } from './components/main/transactions/transactio
 import { TransactionTypesComponent } from './components/main/transactionTypes/transaction-types/transaction-types.component';
 import { TransactionDetailComponent } from './components/main/transactions/transaction-detail/transaction-detail.component';
 import { CostCentresComponent } from './components/main/costCentres/cost-centres/cost-centres.component';
+import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { CostCentresComponent } from './components/main/costCentres/cost-centres
     EuroCurrencyPipe,
     TransactionDetailComponent,
     CostCentresComponent,
-    UserComponent
+    UserComponent,
+    DeleteDialogComponent
   ],
   imports: [
     GlobalRoutingModule,
@@ -73,6 +75,9 @@ import { CostCentresComponent } from './components/main/costCentres/cost-centres
     UsersService,
     AccountsService,
     { provide: LOCALE_ID, useValue: 'es'}
+  ],
+  entryComponents: [
+    DeleteDialogComponent
   ],
   bootstrap: [
     AppComponent

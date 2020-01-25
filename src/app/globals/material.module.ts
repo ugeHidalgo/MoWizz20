@@ -16,7 +16,8 @@ import {
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatDialogModule,
 } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
 
@@ -41,7 +42,8 @@ import { FormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ],
 
   exports: [
@@ -62,7 +64,8 @@ import { FormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule
   ]
 })
 

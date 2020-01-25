@@ -3,9 +3,10 @@ import { TransactionsService } from 'src/app/services/transactions/transactions.
 import { ToastrService } from 'ngx-toastr';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { TransactionType, TransactionTypes } from 'src/app/models/transactionType';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Transaction } from 'src/app/models/transaction';
 import { Router } from '@angular/router';
+import { DeleteDialogComponent } from 'src/app/components/dialogs/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-transactions',
@@ -28,7 +29,8 @@ export class TransactionsComponent {
     private transactionsService: TransactionsService,
     private toastr: ToastrService,
     private globals: GlobalsService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     const me = this;
     me.displayedColumns = ['date', 'type', 'amount', 'account', 'costcentre', 'concept', 'comments'];
@@ -70,6 +72,17 @@ export class TransactionsComponent {
   }
 
   onClickRemoveButton() {
+    const me = this;
+
+      me.dialog.open(DeleteDialogComponent, {
+        data: {
+          title: 'Borrar',
+          message: 'Seguro?'
+        }
+      });
+  }
+
+  onDeleteConfirmed() {
     const me = this;
 
     me.globals.maskScreen();
