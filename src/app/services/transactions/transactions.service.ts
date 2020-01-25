@@ -80,4 +80,17 @@ export class TransactionsService {
                 catchError(me.operationHelper.handleError<Transaction>('createOrUpdateTransaction', null))
               );
   }
+
+  /**.*/
+  deleteTransactionById(company: string, id: string): Observable<boolean> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          deleteTransactionByIdUrl = `${me.transactionsUrl}/${company}/${id}`,
+          success = me.http.delete<boolean>(deleteTransactionByIdUrl, httpOptions)
+                      .pipe(
+                        tap(_ => console.log(`Transaction with id ${id} for user ${company} was deleted.`)),
+                        catchError(me.operationHelper.handleError<boolean>(`deleteTransactionById (userName:${company}, id:${id})`))
+                      );
+    return success;
+  }
 }

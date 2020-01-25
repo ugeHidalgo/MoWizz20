@@ -70,7 +70,24 @@ export class TransactionsComponent {
   }
 
   onClickRemoveButton() {
-    this.toastr.warning('To be implemented.');
+    const me = this;
+
+    me.globals.maskScreen();
+    me.transactionsService.deleteTransactionById(me.usedCompany, me.selectedRowId)
+      .subscribe(success=> {
+        if (success) {
+          me.getTransactionsForCompany(me.usedCompany);
+          me.globals.unMaskScreen();
+          me.toastr.success('Movimiento borrado correctamente.')
+        } else {
+          me.globals.unMaskScreen();
+          me.toastr.error('No se puedo borrar el movimiento. Inténtelo de nuevo.');
+        }
+      },
+      error => {
+        me.globals.unMaskScreen();
+        me.toastr.error('No se puedo borrar el movimiento. Inténtelo de nuevo: ' + error.message);
+      });
   }
 
   selectRow(row) {
