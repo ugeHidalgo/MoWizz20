@@ -73,11 +73,23 @@ export class TransactionsComponent {
 
   onClickRemoveButton() {
     const me = this;
+    let dialogRef;
 
-      me.dialog.open(DeleteDialogComponent, {
+    if (me.selectedRowId==='-1') {
+      me.toastr.error('Debe seleccionar un movimiento para borrar.');
+      return;
+    }
+
+    dialogRef = me.dialog.open(DeleteDialogComponent, {
+        width: '250px',
         data: {
-          title: 'Borrar',
-          message: 'Seguro?'
+          title: 'Confirmar',
+          message: 'Va a borrar el movimiento selecciopnado. ¿Está seguro?'
+        }
+      });
+      dialogRef.afterClosed().subscribe(confirmed => {
+        if (confirmed) {
+          me.onDeleteConfirmed();
         }
       });
   }
