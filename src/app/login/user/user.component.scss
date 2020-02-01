@@ -1,0 +1,38 @@
+.edition-card {
+  max-width: 400px;
+  padding: 10px 10px 20px 10px;
+}
+
+.card-title {
+  border-radius: 4px;
+  border: none;
+  background-color: #95d420;
+  color: black;
+  height: 16px;
+  width: auto;
+  min-width: 30%;
+  position: relative;
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+.my-header-bar > * {
+  margin-right: 10px;
+}
+
+.card-body {
+  margin: 5px;
+  padding:  20px 0px 0px 0px;
+}
+
+.full-width{
+  width: 95%;
+}

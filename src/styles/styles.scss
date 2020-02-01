@@ -7,3 +7,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .menuItem {
   margin: 5px;
 }
+
+.grid-title {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: none;
+  background-color: #95d420;
+  color: black;
+  height: 16px;
+  width: auto;
+  min-width: 30%;
+  position: relative;
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  line-height: 24px;
+  font-weight: 600;
+}

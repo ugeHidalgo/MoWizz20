@@ -27,13 +27,14 @@ export class CostCentresService {
   }
 
   /**.*/
-  getCostCentres(): Observable<CostCentre[]> {
+  getCostCentres(company: string): Observable<CostCentre[]> {
     const me = this,
-          httpOptions = me.operationHelper.createHttpOptionsWithToken();
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          costCentresForCompanyUrl = `${me.costCentresUrl}/${company}`;
 
-    return me.http.get<CostCentre[]>(me.costCentresUrl, httpOptions)
+    return me.http.get<CostCentre[]>(costCentresForCompanyUrl, httpOptions)
               .pipe(
-                tap(any => console.log('Cost centres fetched successfully.')),
+                tap(any => console.log(`Cost centres for company ${company} fetched successfully.`)),
                 catchError(me.operationHelper.handleError<CostCentre[]>('getCostCentres', []))
               );
   }

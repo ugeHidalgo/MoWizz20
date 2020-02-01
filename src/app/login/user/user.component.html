@@ -1,1 +1,49 @@
-<p>To be implemented!</p>
+<div *ngIf="user" class="edition-card">
+  <div class="card-header">
+    <div class="card-title">{{title}}</div>
+    <mat-toolbar color="primary" class="my-header-bar">
+      <button mat-raised-button color="primary" (click)="onClickGoBackButton()">
+        <i class="material-icons">arrow_back</i>
+      </button>
+      <button  mat-raised-button color="green" (click)="onClickSaveButton()" type="submit" [disabled]='validatingForm.invalid || !validatingForm.touched'>
+        <i class="material-icons">save</i>
+      </button>
+      <button mat-raised-button color="warn" (click)="onClickUndoButton()">
+        <i class="material-icons">undo</i>
+      </button>
+    </mat-toolbar>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="validatingForm" (ngSubmit)="onClickSaveButton()">
+
+      <mat-form-field class="full-width">
+        <mat-label>Nombre de usuario:</mat-label>
+        <input matInput placeholder="Nombre usuario" formControlName="userName" [value]="user.userName" readonly>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre" formControlName="firstName" [value]="user.firstName">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Apellidos</mat-label>
+        <input matInput placeholder="Apellidos" formControlName="lastName" [value]="user.lastName">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>e-Mail</mat-label>
+        <input matInput placeholder="e-Mail" formControlName="email" [value]="user.eMail" required>
+      </mat-form-field>
+      <!-- <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input  matInput  placeholder="Password"  name="password" [(ngModel)]="user.password" type="password" required>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Repetir Password</mat-label>
+        <input  matInput  placeholder="Repetir Password"  name="repeatPassword" type="password" required>
+      </mat-form-field> -->
+      <mat-form-field class="full-width">
+        <mat-label>Libro contable</mat-label>
+        <input matInput placeholder="Libro contable" formControlName="company" [value]="user.company" required>
+      </mat-form-field>
+    </form>
+  </div>
+</div>

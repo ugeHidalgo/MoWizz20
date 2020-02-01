@@ -29,6 +29,19 @@ export class UsersService {
   }
 
   /**.*/
+  getUser(userName: string): Observable<Account[]> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          getUserUrl = `${me.usersUrl}/${userName}`;
+
+    return me.http.get<Account[]>(getUserUrl, httpOptions)
+              .pipe(
+                tap(any => console.log(`User ${userName} fetched successfully.`)),
+                catchError(me.operationHelper.handleError('getUser', []))
+              );
+  }
+
+  /**.*/
   registerUser(user: User): Observable<User> {
     const me = this;
 

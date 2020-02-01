@@ -33,6 +33,31 @@ export class TransactionDetailComponent implements OnInit {
   concepts: Concept[];
   costCentres: CostCentre[];
   accounts: Account[];
+  validation_messages = {
+    'date': [
+      { type: 'required', message: 'El campo fecha es obligatorio.'}
+    ],
+    'transactionType': [
+      { type: 'required', message: 'El tipo de movimiento es obligatoria.'},
+    ],
+    'account': [
+      { type: 'required', message: 'La cuenta de cargo es obligatoria.'},
+    ],
+    'costCentre': [
+      { type: 'required', message: 'El centro de gasto es obligatoria.'}
+    ],
+    'concept': [
+      { type: 'required', message: 'El concepto es obligatorio.'}
+    ],
+    'comments': [
+      { type: 'maxlength', message: 'El numero máximo de caracteres en el campo comentarios es de 100.'}
+    ],
+    'amount': [
+      { type: 'max', message: 'El valor máximo permitido es 999999.'},
+      { type: 'min', message: 'El valor mínimo permitido es -999999.'}
+    ]
+
+  }
 
   constructor(
     private location : Location,
@@ -58,7 +83,9 @@ export class TransactionDetailComponent implements OnInit {
     me.loadInitialData().subscribe(([accounts, costCentres, transaction]) => {
       me.accounts = accounts;
       me.costCentres = costCentres;
-      if (transaction) {
+      if (me.transactionId == '-1') {
+        me.transaction = me.createNewTransaction();;
+      } else {
         me.transaction = transaction;
       }
       me.getActiveConceptsByType(me.transaction.transactionType);
@@ -78,7 +105,6 @@ export class TransactionDetailComponent implements OnInit {
         costCentres = me.costCentreService.getActiveCostCentres(me.company);
 
     if (me.transactionId === '-1') {
-      me.transaction = me.createNewTransaction();
       return forkJoin([accounts, costCentres]);
     }
 
@@ -105,6 +131,7 @@ export class TransactionDetailComponent implements OnInit {
     transaction.costCentre = new CostCentre;
     transaction.transactionType = 2;
     transaction.company = this.company;
+    transaction.comments = '';
     transaction.amount = 0;
 
     return transaction;
@@ -116,6 +143,11 @@ export class TransactionDetailComponent implements OnInit {
 
   onClickSaveButton(): void {
     const me = this;
+
+    if (me.validatingForm.invalid) {
+      me.toastr.error('Hay errores en pantalla. Corríjalos antes de salvar.');
+      return;
+    }
 
     me.globals.maskScreen();
     me.transaction = me.getFormData();
@@ -163,25 +195,29 @@ export class TransactionDetailComponent implements OnInit {
     const me = this;
 
     me.validatingForm = new FormGroup({
-      date: new FormControl('',[Validators.required]),
-      transactionType: new FormControl('',[Validators.required]),
-      concept: new FormControl('',[Validators.required]),
-      costCentre: new FormControl('',[Validators.required]),
-      account: new FormControl('',[Validators.required]),
-      comments: new FormControl('',[]),
-      amount: new FormControl('',[Validators.required]),
-    });
+      date: new FormControl('', [Validators.required]),
+      transactionType: new FormControl('', [Validators.required]),
+      concept: new FormControl('', [Validators.required]),
+      costCentre: new FormControl('', [Validators.required]),
+      account: new FormControl('', [Validators.required]),
+      comments: new FormControl('', [Validators.maxLength(100)]),
+      amount: new FormControl('', { validators: Validators.compose([Validators.max(99999), Validators.min(-999999)])}),
+    },
+    { updateOn: 'blur'});
   }
 
   rebuildForm() {
-    const me = this;
+    const me = this,
+          accountName = me.transaction.account && me.transaction.account.name ? me.transaction.account.name : '',
+          costCentreName = me.transaction.costCentre && me.transaction.costCentre.name ? me.transaction.costCentre.name : '',
+          conceptName = me.transaction.concept && me.transaction.concept.name ? me.transaction.concept.name : '';
 
     me.validatingForm.setValue({
       date: me.transaction.date,
       transactionType: me.transaction.transactionType,
-      account: me.transaction.account.name,
-      costCentre: me.transaction.costCentre.name,
-      concept: me.transaction.concept.name,
+      account: accountName,
+      costCentre: costCentreName,
+      concept: conceptName,
       comments: me.transaction.comments,
       amount: me.transaction.amount
     });
@@ -213,6 +249,16 @@ export class TransactionDetailComponent implements OnInit {
     newTransaction.amount = me.getAmountFromForm(formModel);
 
     return newTransaction;
+  }
+
+  isInvalidField(fieldName: string, validationType: string): boolean {
+    const me = this;
+
+    if (!me.validatingForm.get(fieldName)) {
+      return false;
+    }
+
+    return me.validatingForm.get(fieldName).hasError(validationType);
   }
 
   getAccountByName(name): Account {

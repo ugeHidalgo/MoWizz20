@@ -1,0 +1,43 @@
+.mat-card {
+  margin: 5px;
+}
+
+//Tables styles
+table {
+  width: 100%;
+}
+
+.mat-header-row {
+  font: bold;
+  height: 25px;
+}
+
+.mat-header-cell {
+  padding: 5px;
+}
+
+.mat-row {
+  height: 20px;
+}
+
+tr.mat-row:hover {
+  background-color: aliceblue;
+}
+
+.mat-cell {
+  padding: 5px;
+}
+
+.mat-column {
+  margin-right: 10px;
+}
+
+.mat-column-name,
+.mat-column-description {
+  text-align: left;
+}
+
+.my-header-bar > * {
+  margin-right: 10px;
+}
+//Tables styles

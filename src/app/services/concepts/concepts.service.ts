@@ -28,13 +28,14 @@ export class ConceptsService {
   }
 
   /**.*/
-  getConcepts(): Observable<Concept[]> {
+  getConcepts(company: string): Observable<Concept[]> {
     const me = this,
-          httpOptions = me.operationHelper.createHttpOptionsWithToken();
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          conceptsForCompanyUrl = `${me.conceptsUrl}/${company}`;
 
-    return me.http.get<Concept[]>(me.conceptsUrl, httpOptions)
+    return me.http.get<Concept[]>(conceptsForCompanyUrl, httpOptions)
               .pipe(
-                tap(any => console.log('Concepts fetched successfully.')),
+                tap(any => console.log(`Concepts for company ${company} fetched successfully.`)),
                 catchError(me.operationHelper.handleError<Concept[]>('getConcepts', []))
               );
   }
@@ -60,7 +61,7 @@ export class ConceptsService {
     return this.http.post<Concept[]>(me.conceptsUrl, concepts, httpOptions)
               .pipe(
                 // tslint:disable-next-line:no-shadowed-variable
-                tap(any => console.log(`A total of ${concepts.length} concepts were successfully created.`)),
+                tap(_ => console.log(`A total of ${concepts.length} concepts were successfully created.`)),
                 catchError(me.operationHelper.handleError<Concept[]>('createConcepts', []))
               );
   }

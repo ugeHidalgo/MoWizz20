@@ -5,7 +5,7 @@
       <button mat-raised-button color="primary" (click)="onClickGoBackButton()">
         <i class="material-icons">arrow_back</i>
       </button>
-      <button  mat-raised-button color="green" (click)="onClickSaveButton()">
+      <button  mat-raised-button color="green" (click)="onClickSaveButton()" type="submit" [disabled]='validatingForm.invalid || !validatingForm.touched'>
         <i class="material-icons">save</i>
       </button>
       <button mat-raised-button color="warn" (click)="onClickUndoButton()">
@@ -14,13 +14,16 @@
     </mat-toolbar>
   </div>
   <div class="card-body">
-    <form [formGroup]="validatingForm">
+    <form [formGroup]="validatingForm" (ngSubmit)="onClickSaveButton()">
 
       <mat-form-field class="full-width">
         <mat-label>Fecha:</mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Fecha:" formControlName="date" [value]=transaction.date>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngFor="let validation of validation_messages.date">
+          <mat-error align="end" *ngIf="isInvalidField('date',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -30,6 +33,9 @@
                 {{transactionType.name}}
             </mat-option>
         </mat-select>
+        <mat-error *ngFor="let validation of validation_messages.transactionType">
+          <mat-error align="end" *ngIf="isInvalidField('transactionType',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -39,6 +45,9 @@
                 {{account.name}}: {{account.description}}
             </mat-option>
         </mat-select>
+        <mat-error *ngFor="let validation of validation_messages.account">
+          <mat-error align="end" *ngIf="isInvalidField('account',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -48,14 +57,20 @@
                 {{costCentre.name}}: {{costCentre.description}}
             </mat-option>
         </mat-select>
+        <mat-error *ngFor="let validation of validation_messages.costCentre">
+          <mat-error align="end" *ngIf="isInvalidField('costCentre',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <mat-select placeholder="Concepto: " formControlName="concept">
+        <mat-select placeholder="Concepto: " formControlName="concept" required>
             <mat-option *ngFor="let concept of concepts" [(value)]=concept.name>
                 {{concept.name}}: {{concept.description}}
             </mat-option>
         </mat-select>
+        <mat-error *ngFor="let validation of validation_messages.concept">
+          <mat-error align="end" *ngIf="isInvalidField('concept',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -63,6 +78,9 @@
         <!-- <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount | euroCurrencyPipe" required -->
         <input  matInput  placeholder="Cantidad:"  formControlName="amount" [ngModel]="transaction.amount" required type="number"
                 [ngStyle]="{'color': transaction.amount < 0 ? 'red' : 'black'}" (change)="onAmountChanged()" id="my-amount-field">
+        <mat-error *ngFor="let validation of validation_messages.amount">
+          <mat-error *ngIf="isInvalidField('amount',validation.type)">{{validation.message}}</mat-error>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">

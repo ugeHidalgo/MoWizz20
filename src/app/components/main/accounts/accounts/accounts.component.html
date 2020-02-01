@@ -1,19 +1,6 @@
-<!-- <ng-container *ngFor="let account of accounts">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{account.name}}</mat-card-title>
-      <mat-card-subtitle>{{account.description}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        {{account.iban}}
-    </mat-card-content>
-  </mat-card>
-</ng-container> -->
-
-
 <div class="card">
   <div class="card-header">
-      <div class="card-title">Cuentas de cargo</div>
+      <div class="grid-title">Cuentas de cargo</div>
       <mat-toolbar color="primary" class="my-header-bar">
         <button mat-raised-button color="primary" (click)="onClickAddButton()">
           <i class="material-icons">note_add</i>
@@ -36,6 +23,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header><h3>Nombre</h3></th>
         <td mat-cell *matCellDef="let account">{{account.name}}</td>
+        <td mat-footer-cell *matFooterCellDef> Total: </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -44,11 +32,19 @@
             [ngStyle]="{'color': account.amount < 0 ? 'red' : 'black'}">
             {{account.amount | euroCurrencyPipe}}
         </td>
+        <td mat-footer-cell *matFooterCellDef> {{getTotalAmount() | euroCurrencyPipe}} </td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef><h3>Description</h3></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><h3>Description</h3></th>
         <td mat-cell *matCellDef="let account">{{account.description}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef><h3>En uso</h3></th>
+        <td *matCellDef="let concept">
+          <mat-checkbox [checked]="concept.active"  [disableRipple]="true" (click)="$event.preventDefault()"></mat-checkbox>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -56,7 +52,7 @@
           (click)="selectRow(row)"
           [style.background]="row.id == selectedRowId ? 'bisque' : ''">
       </tr>
-
+      <tr mat-footer-row *matFooterRowDef="displayedFooterColumns"></tr>
     </table>
     <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
   </div>

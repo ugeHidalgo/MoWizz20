@@ -16,6 +16,7 @@ export class AccountsComponent {
   selectedRowId: string = '-1';
   accounts: any[];
   displayedColumns: string[];
+  displayedFooterColumns: string[];
   usedCompany: string;
   dataSource: MatTableDataSource<Account>;
 
@@ -30,7 +31,8 @@ export class AccountsComponent {
   ) {
     const me = this;
 
-    me.displayedColumns = ['name','amount', 'description'];
+    me.displayedColumns = ['name','amount', 'description', 'active'];
+    me.displayedFooterColumns = ['name', 'amount'];
     me.usedCompany = globals.getCompany();
     me.getAccountsForCompany(me.usedCompany);
   }
@@ -39,7 +41,7 @@ export class AccountsComponent {
     const me = this;
 
     me.globals.maskScreen();
-    me.accountsService.getAccountsForCompany(company)
+    me.accountsService.getAccounts(company)
       .subscribe(accounts => {
         me.accounts = accounts;
         me.dataSource = new MatTableDataSource<Account>(accounts);
@@ -77,5 +79,10 @@ export class AccountsComponent {
 
   selectRow(row) {
     this.selectedRowId = row.id;
+  }
+
+  getTotalAmount() {
+    if (!this.accounts) return 0;
+    return this.accounts.map(t => t.amount).reduce((acc, value) => acc + value, 0);
   }
 }
