@@ -102,7 +102,7 @@ export class UserComponent implements OnInit {
 
     me.globals.maskScreen();
     me.user = me.getFormData();
-    /* me.usersService.updateUser(me.user)
+    me.usersService.updateUser(me.user)
       .subscribe( (updatedUser) => {
           if (updatedUser) {
             me.globals.unMaskScreen();
@@ -112,7 +112,7 @@ export class UserComponent implements OnInit {
             me.toastr.error('No se puedo guardar el usuario. Inténtelo de nuevo.');
           }
         }
-      ); */
+      );
     me.rebuildForm();
   }
 
@@ -128,7 +128,7 @@ export class UserComponent implements OnInit {
       userName: new FormControl('', []),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', []),
-      email: new FormControl('', [Validators.email, Validators.required]),
+      eMail: new FormControl('', [Validators.email, Validators.required]),
       company: new FormControl('', [Validators.required])
     },
     { updateOn: 'blur'});
@@ -141,7 +141,7 @@ export class UserComponent implements OnInit {
       userName: me.user.userName,
       firstName: me.user.firstName,
       lastName: me.user.lastName,
-      email: me.user.eMail,
+      eMail: me.user.eMail,
       company: me.user.company
     });
   }

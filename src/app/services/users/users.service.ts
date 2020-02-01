@@ -54,6 +54,20 @@ export class UsersService {
   }
 
   /**.*/
+  updateUser(user: User): Observable<User> {
+    const me = this,
+          httpOptions = me.operationHelper.createHttpOptionsWithToken(),
+          updateUserUrl = `${me.usersUrl}/update`;
+
+    return me.http.post<User>(updateUserUrl, user, httpOptions)
+    .pipe(
+      // tslint:disable-next-line:no-shadowed-variable
+      tap( (updatedUser: User) => console.log(`User ${updatedUser.userName} updated successfully created.`)),
+      catchError(me.operationHelper.handleError<User>('updateUser'))
+    );
+  }
+
+  /**.*/
   isUserAuthenticated(userData: any): Observable<any> {
     const me = this;
 
