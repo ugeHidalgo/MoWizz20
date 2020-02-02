@@ -20,17 +20,56 @@
         <mat-label>Nombre de usuario:</mat-label>
         <input matInput placeholder="Nombre usuario" formControlName="userName" [value]="user.userName" readonly>
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Nombre" formControlName="firstName" [value]="user.firstName">
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <mat-label>Apellidos</mat-label>
         <input matInput placeholder="Apellidos" formControlName="lastName" [value]="user.lastName">
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <mat-label>e-Mail</mat-label>
         <input matInput placeholder="e-Mail" formControlName="eMail" [value]="user.eMail" required>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Tipo de movimiento por defecto en movimientos:</mat-label>
+        <mat-select placeholder="Tipo movimiento: " formControlName="transactionType" (selectionChange)="onTransactionTypeSelected()">
+            <mat-option *ngFor="let transactionType of transactionTypes" [(value)]=transactionType.value>
+                {{transactionType.name}}
+            </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngFor="let validation of validation_messages.transactionType">
+          <mat-error align="end" *ngIf="isInvalidField('transactionType',validation.type)">{{validation.message}}</mat-error>
+        </mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Cuenta de cargo por defecto en movimientos:</mat-label>
+        <mat-select placeholder="Cuenta: " formControlName="account">
+            <mat-option *ngFor="let account of accounts" [(value)]=account.name>
+                {{account.name}}: {{account.description}}
+            </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngFor="let validation of validation_messages.account">
+          <mat-error align="end" *ngIf="isInvalidField('account',validation.type)">{{validation.message}}</mat-error>
+        </mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Centro de gasto por defecto en movimientos:</mat-label>
+        <mat-select placeholder="Centro de gasto: " formControlName="costCentre">
+            <mat-option *ngFor="let costCentre of costCentres" [(value)]=costCentre.name>
+                {{costCentre.name}}: {{costCentre.description}}
+            </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngFor="let validation of validation_messages.costCentre">
+          <mat-error align="end" *ngIf="isInvalidField('costCentre',validation.type)">{{validation.message}}</mat-error>
+        </mat-error> -->
       </mat-form-field>
       <!-- <mat-form-field class="full-width">
         <mat-label>Password</mat-label>

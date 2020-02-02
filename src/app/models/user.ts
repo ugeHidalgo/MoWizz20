@@ -1,3 +1,6 @@
+import { CostCentre } from './costCentre';
+import { Account } from './account';
+
 export class User {
   _id: string;
   userName: string;
@@ -9,4 +12,7 @@ export class User {
   created: Date;
   updated: Date;
   eMail: string;
+  transactionType: number;
+  costCentre: CostCentre;
+  account: Account;
 }

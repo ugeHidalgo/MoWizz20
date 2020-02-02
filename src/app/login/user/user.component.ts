@@ -4,6 +4,7 @@ import { User } from 'src/app/models/user';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransactionType, TransactionTypes } from 'src/app/models/transactionType';
 import { CostCentre } from 'src/app/models/costCentre';
+import { Account } from 'src/app/models/account';
 import { GlobalsService } from 'src/app/globals/globals.service';
 import { TransactionsService } from 'src/app/services/transactions/transactions.service';
 import { CostCentresService } from 'src/app/services/costCentres/cost-centres.service';
@@ -129,20 +130,28 @@ export class UserComponent implements OnInit {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', []),
       eMail: new FormControl('', [Validators.email, Validators.required]),
-      company: new FormControl('', [Validators.required])
+      company: new FormControl('', [Validators.required]),
+      transactionType: new FormControl('', []),
+      costCentre: new FormControl('', []),
+      account: new FormControl('', []),
     },
     { updateOn: 'blur'});
   }
 
   rebuildForm() {
-    const me = this;
+    const me = this,
+    accountName = me.user.account && me.user.account.name ? me.user.account.name : '',
+    costCentreName = me.user.costCentre && me.user.costCentre.name ? me.user.costCentre.name : '';
 
     me.validatingForm.setValue({
       userName: me.user.userName,
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
-      company: me.user.company
+      company: me.user.company,
+      transactionType: me.user.transactionType,
+      account: accountName,
+      costCentre: costCentreName,
     });
   }
 
@@ -155,8 +164,19 @@ export class UserComponent implements OnInit {
     updatedUser.lastName = formModel.lastName;
     updatedUser.eMail = formModel.eMail;
     updatedUser.company = formModel.company;
+    updatedUser.transactionType = formModel.transactionType;
+    updatedUser.costCentre = me.getCostCentreByName(formModel.costCentre);
+    updatedUser.account = me.getAccountByName(formModel.account);
 
     return updatedUser;
+  }
+
+  getAccountByName(name): Account {
+    return this.accounts.find( function(x) { return x.name === name; });
+  }
+
+  getCostCentreByName(name): CostCentre {
+    return this.costCentres.find( function(x) { return x.name === name; });
   }
 
 }
