@@ -15,6 +15,8 @@ import { Observable, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ConceptsService } from 'src/app/services/concepts/concepts.service';
 import { EuroCurrencyPipe } from 'src/app/pipes/EuroCurrencyPipe';
+import { UsersService } from 'src/app/services/users/users.service';
+import { User } from 'src/app/models/user';
 
 
 @Component({
@@ -26,6 +28,7 @@ import { EuroCurrencyPipe } from 'src/app/pipes/EuroCurrencyPipe';
 export class TransactionDetailComponent implements OnInit {
   transactionId: string;
   title: string;
+  userName: string;
   company: string;
   transaction: Transaction;
   validatingForm: FormGroup;
@@ -33,6 +36,7 @@ export class TransactionDetailComponent implements OnInit {
   concepts: Concept[];
   costCentres: CostCentre[];
   accounts: Account[];
+  user: User;
   validation_messages = {
     'date': [
       { type: 'required', message: 'El campo fecha es obligatorio.'}
@@ -67,6 +71,7 @@ export class TransactionDetailComponent implements OnInit {
     private costCentreService: CostCentresService,
     private accountService: AccountsService,
     private conceptsService: ConceptsService,
+    private usersService: UsersService,
     private toastr: ToastrService
   ) {
     const me = this;
@@ -79,10 +84,12 @@ export class TransactionDetailComponent implements OnInit {
 
     me.transactionId = me.route.snapshot.paramMap.get('id');
     me.setScreenTitle();
+    me.userName = me.globals.userNameLogged;
     me.company = me.globals.getCompany();
-    me.loadInitialData().subscribe(([accounts, costCentres, transaction]) => {
+    me.loadInitialData().subscribe(([accounts, costCentres, user, transaction]) => {
       me.accounts = accounts;
       me.costCentres = costCentres;
+      me.user = user;
       if (me.transactionId == '-1') {
         me.transaction = me.createNewTransaction();;
       } else {
@@ -102,14 +109,15 @@ export class TransactionDetailComponent implements OnInit {
     const me = this;
     let transaction,
         accounts = me.accountService.getActiveAccounts(me.company),
-        costCentres = me.costCentreService.getActiveCostCentres(me.company);
+        costCentres = me.costCentreService.getActiveCostCentres(me.company),
+        user = me.usersService.getUser(me.userName);
 
     if (me.transactionId === '-1') {
-      return forkJoin([accounts, costCentres]);
+      return forkJoin([accounts, costCentres, user]);
     }
 
     transaction = me.transactionsService.getTransactionById(me.company, me.transactionId)
-    return forkJoin([accounts, costCentres, transaction]);
+    return forkJoin([accounts, costCentres, user, transaction]);
   }
 
   setScreenTitle(): void {
@@ -123,13 +131,17 @@ export class TransactionDetailComponent implements OnInit {
   }
 
   createNewTransaction(): Transaction {
-    let transaction = new Transaction;
+    const me = this;
+    let transaction = new Transaction,
+        defaultTransactionType = me.user.transactionType ? me.user.transactionType : '2',
+        defaultCostCentre = me.user.costCentre ? me.user.costCentre : new CostCentre,
+        defaultAccount = me.user.account ? me.user.account : new Account;
 
     transaction.date = new Date;
     transaction.concept = new Concept;
-    transaction.account = new Account;
-    transaction.costCentre = new CostCentre;
-    transaction.transactionType = 2;
+    transaction.account = defaultAccount;
+    transaction.costCentre = defaultCostCentre;
+    transaction.transactionType = Number(defaultTransactionType);
     transaction.company = this.company;
     transaction.comments = '';
     transaction.amount = 0;

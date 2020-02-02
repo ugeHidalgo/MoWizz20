@@ -3,7 +3,7 @@
        <span><a mat-button routerLink="/mainscreen">Inicio</a></span>
 
        <div *ngIf="globals.userNameLogged">
-        <button mat-button [matMenuTriggerFor]="setupmenu">Configurar</button>
+        <button mat-button [matMenuTriggerFor]="setupmenu">Archivos</button>
         <mat-menu #setupmenu="matMenu">
           <button mat-menu-item routerLink="/cost-centres">Centros de gasto</button>
           <button mat-menu-item routerLink="/accounts">Cuentas</button>
