@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Cuenta:</mat-label>
+    <input matInput placeholder="Cuenta:" [ngModel]="data.accountName" readonly>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Cantidad:</mat-label>
+    <input matInput placeholder="Cantidad:" [ngModel]="data.amount" type="number">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial (click)="onCancelClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="true">Ok</button>
+</div>

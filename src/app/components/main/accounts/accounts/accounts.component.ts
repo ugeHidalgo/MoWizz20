@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalsService } from 'src/app/globals/globals.service';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { Account } from 'src/app/models/account';
 import { Router } from '@angular/router';
+import { UpdateAmountDialogComponent } from 'src/app/components/dialogs/update-amount-dialog/update-amount-dialog.component';
 
 @Component({
   selector: 'app-accounts',
@@ -27,7 +28,8 @@ export class AccountsComponent {
     private accountsService: AccountsService,
     private toastr: ToastrService,
     private globals: GlobalsService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
     const me = this;
 
@@ -73,6 +75,30 @@ export class AccountsComponent {
     this.router.navigate([pathToAccountDetail]); */
   }
 
+  onClickEditAmountButton() {
+    const me = this;
+    let dialogRef;
+
+    if (me.selectedRowId==='-1') {
+      me.toastr.error('Debe seleccionar una cuenta para actualizar la cantidad.');
+      return;
+    }
+
+    dialogRef = me.dialog.open(UpdateAmountDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Cambio de cantidad en cuenta:',
+          accountName: 'Cuenta tal',
+          amount: 100
+        }
+      });
+      dialogRef.afterClosed().subscribe(confirmed => {
+        if (confirmed) {
+          me.onAmountToChangeConfirmed();
+        }
+      });
+  }
+
   onClickRemoveButton() {
     this.toastr.warning('To be implemented.');
   }
@@ -84,5 +110,9 @@ export class AccountsComponent {
   getTotalAmount() {
     if (!this.accounts) return 0;
     return this.accounts.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+  }
+
+  onAmountToChangeConfirmed() {
+
   }
 }

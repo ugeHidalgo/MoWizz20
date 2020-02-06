@@ -40,6 +40,7 @@ import { TransactionTypesComponent } from './components/main/transactionTypes/tr
 import { TransactionDetailComponent } from './components/main/transactions/transaction-detail/transaction-detail.component';
 import { CostCentresComponent } from './components/main/costCentres/cost-centres/cost-centres.component';
 import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
+import { UpdateAmountDialogComponent } from './components/dialogs/update-amount-dialog/update-amount-dialog.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete
     TransactionDetailComponent,
     CostCentresComponent,
     UserComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    UpdateAmountDialogComponent
   ],
   imports: [
     GlobalRoutingModule,
@@ -77,7 +79,8 @@ import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete
     { provide: LOCALE_ID, useValue: 'es'}
   ],
   entryComponents: [
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    UpdateAmountDialogComponent
   ],
   bootstrap: [
     AppComponent
