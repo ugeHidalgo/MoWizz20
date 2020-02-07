@@ -15,6 +15,7 @@ import { UpdateAmountDialogComponent } from 'src/app/components/dialogs/update-a
 export class AccountsComponent {
 
   selectedRowId: string = '-1';
+  selectedAccount: Account;
   accounts: any[];
   displayedColumns: string[];
   displayedFooterColumns: string[];
@@ -88,8 +89,8 @@ export class AccountsComponent {
         width: '250px',
         data: {
           title: 'Cambio de cantidad en cuenta:',
-          accountName: 'Cuenta tal',
-          amount: 100
+          accountName: me.selectedAccount.name,
+          amount: me.selectedAccount.amount
         }
       });
       dialogRef.afterClosed().subscribe(confirmed => {
@@ -104,7 +105,14 @@ export class AccountsComponent {
   }
 
   selectRow(row) {
-    this.selectedRowId = row.id;
+    const me = this;
+
+    me.selectedRowId = row.id;
+    me.selectedAccount = me.getAccountById(me.selectedRowId);
+  }
+
+  getAccountById(selectedRowId: string): Account {
+    return this.accounts.find( function(x) { return x.id === selectedRowId; });
   }
 
   getTotalAmount() {
@@ -113,6 +121,8 @@ export class AccountsComponent {
   }
 
   onAmountToChangeConfirmed() {
+    const me = this;
+
 
   }
 }
